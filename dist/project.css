@@ -4,7 +4,7 @@
 
 /* 中文备注：Case Study 以数据分析过程为主线，突出输入、方法、发现和决策。 */
 .data-inputs{margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
-.data-inputs>span,.method-strip>span,.decision-callout>span{display:block;margin-bottom:14px;color:var(--blue);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.data-inputs>span,.method-strip>span,.decision-callout>span,.product-callout>span{display:block;margin-bottom:14px;color:var(--blue);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .data-inputs ul{margin:0;padding-left:1.2rem;color:var(--muted)}
 .data-inputs li+li{margin-top:8px}
 .analysis-section{max-width:none;background:var(--dark);color:#fff}
@@ -20,11 +20,17 @@
 .method-strip .tech-list{margin-top:0}
 .method-strip .tech-list span{color:var(--text);background:var(--bg);border-color:var(--line)}
 .findings-section{padding-top:20px}
-.decision-callout{padding:clamp(30px,5vw,60px);border-radius:28px;background:var(--lime);margin-top:70px}
+.outcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:70px}
+.decision-callout,.product-callout{padding:clamp(30px,4vw,52px);border-radius:28px}
+.decision-callout{background:var(--lime)}
 .decision-callout>span{color:#26352e}
-.decision-callout p{max-width:950px;margin:0;color:#17221d;font-size:clamp(1.35rem,2.5vw,2.35rem);line-height:1.18;letter-spacing:-.025em}
+.decision-callout p,.product-callout p{margin:0;font-size:clamp(1.22rem,2vw,1.8rem);line-height:1.2;letter-spacing:-.025em}
+.decision-callout p{color:#17221d}
+.product-callout{background:var(--blue);color:#fff}
+.product-callout>span{color:#cdd7ff}
+.product-callout p{color:#fff}
 .limits-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
-.limits-grid article{padding:28px;border:1px solid var(--line);border-radius:20px;background:#fff}
+.limits-grid>div{padding:28px;border:1px solid var(--line);border-radius:20px;background:#fff}
 .limits-grid p{margin-bottom:0}
-@media(max-width:850px){.contribution-head,.limits-grid{grid-template-columns:1fr}.contribution-head{gap:18px}}
-@media(max-width:520px){.analysis-timeline article{grid-template-columns:44px minmax(0,1fr);gap:10px}.decision-callout{padding:24px}}
+@media(max-width:850px){.contribution-head,.outcome-grid,.limits-grid{grid-template-columns:1fr}.contribution-head{gap:18px}}
+@media(max-width:520px){.analysis-timeline article{grid-template-columns:44px minmax(0,1fr);gap:10px}.decision-callout,.product-callout{padding:24px}}

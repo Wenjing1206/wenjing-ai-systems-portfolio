@@ -66,6 +66,7 @@ const CASE_ANALYSIS = {
       {title:'Turn findings into policy',body:'Used confidence, constraint coverage, repeated questions, and recommendation stagnation to decide the next action.'}
     ],
     analysisOutcome:'The analysis connected evaluation metrics to dialogue policy: low coverage triggers clarification, strong evidence triggers ranking, and detected overrides remove stale context before retrieval.',
+    productOutcome:'Delivered the Conversation State Management layer for a multi-turn shopping copilot that can preserve preferences, resolve intent changes, and support recommendation over a frozen 50,000-product catalog.',
     limitations:'Public development sessions are useful for iteration but do not represent every real shopping behavior. Team-level evaluation results are kept separate from my documented Conversation State Management contribution.'
   },
   'enterprise-ai-auditing': {
@@ -79,6 +80,7 @@ const CASE_ANALYSIS = {
       {title:'Review exceptions',body:'Routed ambiguous, conflicting, or high-impact cases to Human-in-the-Loop checkpoints instead of forcing an automated conclusion.'}
     ],
     analysisOutcome:'The data analysis produced a traceable review path: extracted element → applicable evidence → rule or logic check → review suggestion → human confirmation.',
+    productOutcome:'Produced the product architecture for an auditable review workspace combining structured extraction, a Rule Engine, RAG evidence retrieval, review suggestions, and Human-in-the-Loop approval.',
     limitations:'The 60%+ efficiency improvement comes from internship records. Review accuracy depends on document quality, knowledge-base freshness, and expert validation of edge cases.'
   },
   'carbon-data-platform': {
@@ -92,6 +94,7 @@ const CASE_ANALYSIS = {
       {title:'Build decision views',body:'Organized governed fields into SugarBI views for project tracking, policy and methodology queries, regional comparison, and market analysis.'}
     ],
     analysisOutcome:'The analysis moved the product from scattered records to a governed data layer that supports consistent filtering, comparison, monitoring, and BI reporting.',
+    productOutcome:'Built a governed carbon-data foundation and SugarBI decision views for lifecycle tracking, policy and methodology lookup, regional comparison, and market monitoring.',
     limitations:'Automated geographic extraction still needs exception handling for ambiguous place names. Reported accuracy improvement and record counts are based on internship materials rather than an independently rerun audit.'
   },
   'linguaplay': {
@@ -105,6 +108,7 @@ const CASE_ANALYSIS = {
       {title:'Refine product rules',body:'Changed the start rule and interface together so a host could validate a live room alone while multiplayer remained available.'}
     ],
     analysisOutcome:'The analysis treated the game as observable state transitions, making it possible to verify the complete learning loop instead of checking isolated screens.',
+    productOutcome:'Delivered a playable local-first vocabulary product with built-in and custom sets, offline practice, six-digit real-time rooms, scoring, progress history, leaderboards, and a host flow that can start with one player.',
     limitations:'This process validates functional behavior and state integrity; it does not yet measure long-term vocabulary retention or classroom learning outcomes.'
   },
   'honkai-nlp': {
@@ -118,6 +122,7 @@ const CASE_ANALYSIS = {
       {title:'Evaluate by class',body:'Reviewed accuracy, macro F1, weighted F1, and the confusion matrix so smaller chapters were not hidden by the overall score.'}
     ],
     analysisOutcome:'The executed notebook reached 0.744 accuracy, 0.694 macro F1, and 0.745 weighted F1. The gap between overall and macro performance showed that chapter imbalance remained an important interpretation limit.',
+    productOutcome:'Delivered a fully executed, reproducible narrative-analytics notebook and visual report that lets readers compare vocabulary, topics, and classification behavior across five fictional worlds.',
     limitations:'Dialogue volume and speaker distribution differ by chapter. The model identifies linguistic association, not authorial intent or causal narrative influence.'
   },
   'ai-image-memory': {
@@ -131,6 +136,7 @@ const CASE_ANALYSIS = {
       {title:'Bound the conclusion',body:'Distinguished the supported delayed image-type effect from weaker label and interaction patterns that require more evidence.'}
     ],
     analysisOutcome:'Project materials report a delayed image-type effect at p = .002. The analysis supports a difference in delayed recognition, while avoiding a broader claim that labels or AI images always improve memory.',
+    productOutcome:'Produced an experimental research package and evidence-based design guidance for teams deciding when AI-origin labels or image-source cues should appear in visual experiences.',
     limitations:'The sample was small and drawn from UCLA students. Stimulus style may partly explain memorability, so broader image categories and preregistered replication would strengthen the conclusion.'
   },
   'image-authenticity': {
@@ -143,6 +149,7 @@ const CASE_ANALYSIS = {
       {title:'Translate to action',body:'Connected each state to an explanation and next step rather than displaying a binary detector score.'}
     ],
     analysisOutcome:'The analysis produced a Trust & Safety decision framework for presenting detection evidence and uncertainty.',
+    productOutcome:'Created a Trust & Safety product concept that turns detector outputs into explainable evidence states, calibrated uncertainty, and clear review or escalation actions.',
     limitations:'This is a product and research exploration; model performance has not been validated on a production-scale benchmark.'
   },
   'chinese-dialect': {
@@ -155,6 +162,7 @@ const CASE_ANALYSIS = {
       {title:'Cross-check interpretation',body:'Compared patterns across all three views to avoid relying on distortions from a single projection.'}
     ],
     analysisOutcome:'Dalian consistently appeared close to Jiaodong regions, particularly Yantai and Weihai, across the project visualizations.',
+    productOutcome:'Delivered a comparative linguistic analysis with a distance matrix, heatmap, MDS projection, and dendrogram that make regional similarity inspectable from multiple views.',
     limitations:'Lexical distance captures one dimension of dialect similarity and does not fully represent syntax, tone, migration history, or within-region variation.'
   },
   'interpersonal-dynamics': {
@@ -167,6 +175,7 @@ const CASE_ANALYSIS = {
       {title:'Test the difference',body:'Used statistical comparison to evaluate whether the observed condition gap was unlikely under the null hypothesis.'}
     ],
     analysisOutcome:'The project recorded 67.65% synchrony for cooperative interaction and 23.21% for argumentative interaction, with p = .030.',
+    productOutcome:'Produced a coded behavioral dataset and statistical research report that operationalize interaction synchrony for repeatable comparison between social conditions.',
     limitations:'The operational definition, sample size, and interaction context limit generalization beyond the recorded study.'
   },
   'airline-ux': {
@@ -179,6 +188,7 @@ const CASE_ANALYSIS = {
       {title:'Redesign and inspect',body:'Reorganized the flow around Book Trip and reviewed the before/after path for clarity and responsive use.'}
     ],
     analysisOutcome:'The redesign grouped the full search task around one information hierarchy and a single Search Now action.',
+    productOutcome:'Delivered a responsive booking-flow prototype that unifies route, date, passenger, and cabin decisions around one clear primary action.',
     limitations:'The project demonstrates an interaction rationale; production conversion impact would require instrumented usability or funnel testing.'
   },
   'deportation-data': {
@@ -191,6 +201,7 @@ const CASE_ANALYSIS = {
       {title:'Design the story',body:'Connected interactive Tableau views with explanatory copy and data limitations on the website.'}
     ],
     analysisOutcome:'The final team site paired interactive trends with historical context, while my verified role covered data visualization and web management.',
+    productOutcome:'Published a collaborative data-storytelling website with embedded Tableau analysis, historical interpretation, and visible documentation of archival limitations.',
     limitations:'Archival categories reflect the institutions that produced the records. Missingness and historical labels limit modern interpretation.'
   },
   'spotify-api': {
@@ -203,6 +214,7 @@ const CASE_ANALYSIS = {
       {title:'Prepare analysis',body:'Selected reusable fields for search results, descriptive summaries, and downstream visualization.'}
     ],
     analysisOutcome:'The project created a repeatable path from API response to usable music dataset.',
+    productOutcome:'Built a reusable API-to-table workflow that converts nested music metadata into validated records ready for search, comparison, and visualization.',
     limitations:'API availability, authorization, request limits, and platform-defined popularity measures constrain the analysis.'
   },
   'cs144-web': {
@@ -215,6 +227,7 @@ const CASE_ANALYSIS = {
       {title:'Verify end to end',body:'Tested the complete browser flow rather than treating the optimized function in isolation.'}
     ],
     analysisOutcome:'The analysis connected architecture choices to observable application behavior and documented the integration boundary.',
+    productOutcome:'Delivered a working full-stack browser system with a documented client-server boundary and a targeted WebAssembly computation path.',
     limitations:'The project demonstrates engineering analysis; production-scale performance claims would require controlled benchmarks.'
   },
   'kze-marketing': {
@@ -227,6 +240,7 @@ const CASE_ANALYSIS = {
       {title:'Support selection',body:'Translated the analysis into creator matching and campaign-allocation recommendations.'}
     ],
     analysisOutcome:'Internship materials report higher ROI, lower cost per engagement, and improved reach after the optimization work.',
+    productOutcome:'Created a creator-selection and campaign-allocation framework from 500+ profiles and eight engagement patterns, supporting more comparable influencer decisions.',
     limitations:'Reported business outcomes were not independently rerun for this portfolio, and campaign results may also reflect creative, timing, and budget changes.'
   },
   'soul-mate-bridal': {
@@ -239,6 +253,7 @@ const CASE_ANALYSIS = {
       {title:'Test changes',body:'Supported landing-page, SEO, and contact-flow changes and monitored conversion-related outcomes.'}
     ],
     analysisOutcome:'Internship records report 15% higher lead conversion and 25% organic-search growth following the combined optimization work.',
+    productOutcome:'Delivered an integrated growth improvement across landing-page structure, contact flow, CTA hierarchy, and SEO content, with the recorded program outcomes shown separately from any single design change.',
     limitations:'The recorded outcomes reflect a combined program of UX, content, and SEO changes, so they should not be attributed to one interface change alone.'
   }
 };
