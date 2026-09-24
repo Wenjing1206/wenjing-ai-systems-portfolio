@@ -10,7 +10,7 @@ window.PROJECTS = [
     built:['Designed the session-scoped dialogue state for hard constraints, soft preferences, rejected values, no-preference boundaries, and intent transitions.','Created rule-first intent and attribute handling with an optional validated semantic fallback.','Defined adaptive policy signals using confidence, constraint coverage, prior questions, and recommendation stagnation.','Contributed shared contracts connecting state, retrieval, reranking, dialogue, and the final Agent interface.'],
     process:['User message','Intent + constraint extraction','Dialogue state update','Hybrid retrieval','Constraint-aware reranking','Clarify or recommend'],
     tech:['Python','LLM','BM25','Embeddings','Information Retrieval','State Management','Reranking','Evaluation'],
-    results:['Built against a frozen 50,000-product catalog and 200 public development sessions.','The team evaluation framework tracks HitRate@K, MRR, and MTTC plus robustness and ablation tests.','A reported public-set version reached 99.5% HitRate@10; this is a team-system result, while my documented module focus was conversation state management.'],
+    results:['Built against a frozen 50,000-product catalog and 200 public development sessions.','The team evaluation framework tracks HitRate@K, MRR, and MTTC plus robustness and ablation tests.','Public-set evaluation was used to compare the team pipeline by scenario; team outcomes are kept separate from my documented Conversation State Management contribution.'],
     learned:'The hardest agent problem was not generating fluent text; it was managing state transitions safely. A rule that read “up to 30mm” as a price ceiling exposed why typed attributes, failure analysis, and regression tests matter.',
     links:[{label:'Team repository',url:'https://github.com/TikTok-Techjam-0x00/shopping-copilot'}]
   },
@@ -36,7 +36,7 @@ window.PROJECTS = [
   },
   {
     id:'honkai-nlp', title:'Honkai: Star Rail NLP Analysis', subtitle:'Understanding fictional worlds through dialogue data', featured:true, depth:'full', accent:'orange', categories:['Data & Analytics','Research'], tags:['NLP','TF-IDF','Topic Modeling','Data Visualization'], role:'Data analysis, modeling, and narrative interpretation', type:'UCLA Digital Humanities / Data project', cover:'assets/images/dialogue-distribution.png',
-    summary:'A chapter-level language analysis comparing vocabulary, themes, and linguistic signals across the game’s fictional worlds.', context:'Game dialogue is both narrative content and behavioral data. The project asked whether chapter settings could be distinguished by their vocabulary and thematic structure.', problem:'Chapters contained very different amounts of dialogue, so raw frequency could make the largest chapter look the most distinctive even when it was only more verbose.', built:['Cleaned and structured 26,622 dialogue rows across five chapters.','Compared unigram, bigram, TF-IDF, unique-vocabulary, and topic-modeling signals.','Evaluated chapter classification and inspected minority-class recall rather than relying only on aggregate accuracy.','Translated quantitative patterns into a readable narrative-analysis report.'], process:['Clean corpus','Tokenize','Explore frequency','Weight with TF-IDF','Model topics','Compare chapters'], tech:['Python','Pandas','NLP','TF-IDF','Bigrams','LDA','Classification','Visualization'], results:['Produced a structured corpus and repeatable chapter-comparison pipeline.','Identified class imbalance and chapter-volume bias as material limits on interpretation.'], learned:'Method choice changes the story. TF-IDF and class-level evaluation helped separate distinctive language from language that was merely frequent.', links:[]
+    summary:'A chapter-level language analysis comparing vocabulary, themes, and linguistic signals across the game’s fictional worlds.', context:'Game dialogue is both narrative content and behavioral data. The project asked whether chapter settings could be distinguished by their vocabulary and thematic structure.', problem:'Chapters contained very different amounts of dialogue, so raw frequency could make the largest chapter look the most distinctive even when it was only more verbose.', built:['Cleaned and structured 25,664 dialogue rows across five chapters and retained 79 speakers.','Compared unigram, normalized bigram, distinctive-vocabulary, and topic-modeling signals.','Built a class-balanced TF-IDF + Linear SVM classifier and inspected minority-class performance rather than relying only on aggregate accuracy.','Translated quantitative patterns into a readable narrative-analysis report.'], process:['Clean corpus','Tokenize','Explore frequency','Normalize bigrams','Model topics','Build TF-IDF + SVM'], tech:['Python','Pandas','NLP','TF-IDF','Bigrams','LDA','Linear SVM','Visualization'], results:['Produced a structured corpus and repeatable chapter-comparison pipeline.','The executed classifier reached 0.744 accuracy, 0.694 macro F1, and 0.745 weighted F1.','Identified class imbalance and chapter-volume bias as material limits on interpretation.'], learned:'Method choice changes the story. Normalized bigrams, TF-IDF, and class-level evaluation helped separate distinctive language from language that was merely frequent.', links:[]
   },
   {
     id:'ai-image-memory', title:'AI-Generated Images & Memorability', subtitle:'Experimental research on image origin, labels, and recognition memory', featured:true, depth:'full', accent:'pink', categories:['Research','AI Product'], tags:['HCI','Experiment Design','Generative AI','ANOVA'], role:'Experimental design, analysis, and interpretation · Group research', type:'UCLA Cognitive Science research', cover:'assets/images/experiment-results.png',
@@ -52,3 +52,199 @@ window.PROJECTS = [
   {id:'kze-marketing',title:'KZE Marketing Analytics',subtitle:'Creator selection and campaign performance',categories:['Data & Analytics'],tags:['Marketing Analytics','ROI','Audience Insights'],role:'Data Analyst Intern',type:'KZE Group',summary:'Analysis of creator profiles, engagement behavior, and campaign performance to support influencer selection.',context:'Creator decisions combined inconsistent audience, content, and campaign metrics.',problem:'The team needed comparable features and a decision framework rather than a spreadsheet of raw counts.',built:['Cleaned and analyzed 500+ creator profiles.','Identified eight engagement patterns and supported creator matching.'],process:['Clean','Define metrics','Segment','Compare','Recommend'],tech:['Python','Pandas','NumPy','Excel'],results:['Internship records report improved ROI and lower cost per engagement after optimization.'],learned:'Marketing metrics become useful only when tied to a concrete selection or allocation decision.',links:[]},
   {id:'soul-mate-bridal',title:'Soul Mate Bridal UX & Web Growth',subtitle:'A clearer path from discovery to enquiry',categories:['UX & Engineering','Data & Analytics'],tags:['UX','SEO','Conversion'],role:'Marketing & Web Design Intern',type:'Astral Culture Media',summary:'A conversion-focused redesign of the discovery and contact journey for a bridal service.',context:'Potential clients arrived through search and social channels but encountered friction before submitting an enquiry.',problem:'Content, form structure, and CTA hierarchy needed to work as one funnel.',built:['Reviewed 50+ competitors and user behavior.','Redesigned contact flows and supported SEO and landing-page experiments.'],process:['Research','Map funnel','Redesign','Experiment','Monitor'],tech:['UX Research','SEO','A/B Testing','Web Design'],results:['Internship records report a 15% lead-conversion increase and 25% organic-search growth.'],learned:'Growth work is strongest when acquisition, interface, and measurement share the same journey model.',links:[]}
 ];
+
+// 中文备注：每个项目的 Case Study 都补充数据分析问题、数据输入、分析步骤与决策输出。
+const CASE_ANALYSIS = {
+  'shopping-copilot': {
+    analysisQuestion:'How can conversation data reveal when the agent should clarify, retrieve, rerank, or recommend?',
+    dataInputs:['50,000-product frozen catalog','200 labeled public sessions','Turn-level user messages and agent outputs','Scenario labels: Buying, Browsing, Intent Override, Boundary'],
+    analysisProcess:[
+      {title:'Structure each turn',body:'Converted free-text requests into intent, hard constraints, soft preferences, exclusions, no-preference signals, and state transitions.'},
+      {title:'Segment behavior',body:'Compared sessions by scenario so an average score could not hide failures in override, boundary, or exploratory browsing cases.'},
+      {title:'Measure retrieval quality',body:'Tracked HitRate@K and MRR to test whether the hidden target appeared and how highly it ranked; MTTC captured how many turns the agent needed.'},
+      {title:'Diagnose failures',body:'Reviewed paraphrases, typos, vague replies, negation, and stale constraints. One audit found “up to 30mm” being misread as a price ceiling.'},
+      {title:'Turn findings into policy',body:'Used confidence, constraint coverage, repeated questions, and recommendation stagnation to decide the next action.'}
+    ],
+    analysisOutcome:'The analysis connected evaluation metrics to dialogue policy: low coverage triggers clarification, strong evidence triggers ranking, and detected overrides remove stale context before retrieval.',
+    limitations:'Public development sessions are useful for iteration but do not represent every real shopping behavior. Team-level evaluation results are kept separate from my documented Conversation State Management contribution.'
+  },
+  'enterprise-ai-auditing': {
+    analysisQuestion:'Which parts of enterprise report review can be checked consistently by rules, and which require retrieved evidence or expert judgment?',
+    dataInputs:['Enterprise reports','Policies and regulations','Industry standards and technical catalogs','Historical reports and review comments'],
+    analysisProcess:[
+      {title:'Map the review workflow',body:'Decomposed manual review into element extraction, logic validation, and review-opinion generation, then identified the evidence required at each stage.'},
+      {title:'Structure review elements',body:'Converted report content into checkable fields such as policy references, technical parameters, energy-efficiency indicators, and carbon-emission values.'},
+      {title:'Separate rule and retrieval checks',body:'Assigned deterministic thresholds and required-field checks to the Rule Engine, while contextual questions retrieved supporting passages through RAG.'},
+      {title:'Compare claims with evidence',body:'Linked generated findings to regulations, standards, historical cases, and technical catalogs so reviewers could inspect the basis of each issue.'},
+      {title:'Review exceptions',body:'Routed ambiguous, conflicting, or high-impact cases to Human-in-the-Loop checkpoints instead of forcing an automated conclusion.'}
+    ],
+    analysisOutcome:'The data analysis produced a traceable review path: extracted element → applicable evidence → rule or logic check → review suggestion → human confirmation.',
+    limitations:'The 60%+ efficiency improvement comes from internship records. Review accuracy depends on document quality, knowledge-base freshness, and expert validation of edge cases.'
+  },
+  'carbon-data-platform': {
+    analysisQuestion:'How can fragmented carbon-project records become consistent enough for lifecycle monitoring and market analysis?',
+    dataInputs:['CCER, VCS, and Gold Standard project records','Project names and unstructured descriptions','Policies, methodologies, energy-use and emission-reduction fields','Carbon-market transaction data'],
+    analysisProcess:[
+      {title:'Profile source quality',body:'Compared field names, formats, missing values, units, and duplicate patterns across mechanisms before defining a common schema.'},
+      {title:'Clean and standardize',body:'Normalized project identifiers, dates, reduction units, mechanism names, and lifecycle statuses so records could be compared consistently.'},
+      {title:'Enrich location data',body:'Used an administrative-division dictionary and NLP matching to extract province and city from unstructured project names and descriptions.'},
+      {title:'Validate records',body:'Applied completeness, format, range, and cross-field consistency checks; exceptions remained visible for manual review.'},
+      {title:'Build decision views',body:'Organized governed fields into SugarBI views for project tracking, policy and methodology queries, regional comparison, and market analysis.'}
+    ],
+    analysisOutcome:'The analysis moved the product from scattered records to a governed data layer that supports consistent filtering, comparison, monitoring, and BI reporting.',
+    limitations:'Automated geographic extraction still needs exception handling for ambiguous place names. Reported accuracy improvement and record counts are based on internship materials rather than an independently rerun audit.'
+  },
+  'linguaplay': {
+    analysisQuestion:'How can product-state and test data verify that offline practice and real-time rooms behave consistently?',
+    dataInputs:['Vocabulary sets and term-definition pairs','Room, player, question, answer, and score states','Socket.IO event sequences','Integration, browser, and offline test outcomes'],
+    analysisProcess:[
+      {title:'Model the learning flow',body:'Defined the states for choosing a set, joining or creating a room, waiting, playing, scoring, and ending a session.'},
+      {title:'Validate content data',body:'Checked custom and built-in sets for usable pair counts, unique entries, and stable term-definition matching before play.'},
+      {title:'Trace event sequences',body:'Observed room creation, six-digit joins, host start, question broadcast, answer submission, score update, and game completion as one lifecycle.'},
+      {title:'Test failure paths',body:'Compared online and offline behavior, duplicate answers, disconnects, and one-player start to find state transitions that could stall the game.'},
+      {title:'Refine product rules',body:'Changed the start rule and interface together so a host could validate a live room alone while multiplayer remained available.'}
+    ],
+    analysisOutcome:'The analysis treated the game as observable state transitions, making it possible to verify the complete learning loop instead of checking isolated screens.',
+    limitations:'This process validates functional behavior and state integrity; it does not yet measure long-term vocabulary retention or classroom learning outcomes.'
+  },
+  'honkai-nlp': {
+    analysisQuestion:'Which linguistic signals distinguish the five narrative worlds in Honkai: Star Rail, and how reliable are those differences?',
+    dataInputs:['25,664 cleaned dialogue rows','79 retained speakers','Five chapter/world labels','Speaker, chapter, and dialogue-text fields'],
+    analysisProcess:[
+      {title:'Clean the corpus',body:'Removed unusable rows, normalized text and labels, and preserved utterance boundaries so bigrams would not cross unrelated dialogue lines.'},
+      {title:'Explore composition',body:'Compared dialogue volume, speaker coverage, frequent terms, and normalized bigram rates across chapters to identify imbalance before modeling.'},
+      {title:'Extract narrative signals',body:'Used distinctive vocabulary, within-utterance bigrams, POS patterns, and chunk-based LDA to compare themes and language styles.'},
+      {title:'Build the classifier',body:'Created class-balanced TF-IDF features and trained a Linear SVM to predict chapter labels from dialogue text.'},
+      {title:'Evaluate by class',body:'Reviewed accuracy, macro F1, weighted F1, and the confusion matrix so smaller chapters were not hidden by the overall score.'}
+    ],
+    analysisOutcome:'The executed notebook reached 0.744 accuracy, 0.694 macro F1, and 0.745 weighted F1. The gap between overall and macro performance showed that chapter imbalance remained an important interpretation limit.',
+    limitations:'Dialogue volume and speaker distribution differ by chapter. The model identifies linguistic association, not authorial intent or causal narrative influence.'
+  },
+  'ai-image-memory': {
+    analysisQuestion:'Do image origin and AI-source labels change immediate or delayed recognition memory?',
+    dataInputs:['21 UCLA participants','AI-generated and real-image stimuli','Labeled and unlabeled conditions','Immediate and delayed recognition responses'],
+    analysisProcess:[
+      {title:'Operationalize variables',body:'Defined image origin and label condition as within-subject factors, with recognition accuracy measured at immediate and delayed time points.'},
+      {title:'Prepare comparable stimuli',body:'Built controlled AI-generated and real-image sets and balanced presentation conditions to reduce ordering and exposure effects.'},
+      {title:'Collect behavioral data',body:'Used PsychoPy to record participant responses under the four 2 × 2 conditions.'},
+      {title:'Compare effects',body:'Calculated descriptive differences and tested image-type, label, and interaction effects separately for immediate and delayed recognition.'},
+      {title:'Bound the conclusion',body:'Distinguished the supported delayed image-type effect from weaker label and interaction patterns that require more evidence.'}
+    ],
+    analysisOutcome:'Project materials report a delayed image-type effect at p = .002. The analysis supports a difference in delayed recognition, while avoiding a broader claim that labels or AI images always improve memory.',
+    limitations:'The sample was small and drawn from UCLA students. Stimulus style may partly explain memorability, so broader image categories and preregistered replication would strengthen the conclusion.'
+  },
+  'image-authenticity': {
+    analysisQuestion:'How should model confidence and visual evidence be combined so users can judge image authenticity?',
+    dataInputs:['Authentic, edited, and AI-generated image examples','Model confidence outputs','Visual provenance and manipulation cues'],
+    analysisProcess:[
+      {title:'Define the decision',body:'Separated “classify an image” from the user decision of whether to trust, review, or escalate the content.'},
+      {title:'Compare evidence',body:'Organized model confidence, provenance metadata, and visible manipulation cues into complementary evidence types.'},
+      {title:'Map uncertainty',body:'Designed states for high-confidence findings, conflicting signals, and insufficient evidence.'},
+      {title:'Translate to action',body:'Connected each state to an explanation and next step rather than displaying a binary detector score.'}
+    ],
+    analysisOutcome:'The analysis produced a Trust & Safety decision framework for presenting detection evidence and uncertainty.',
+    limitations:'This is a product and research exploration; model performance has not been validated on a production-scale benchmark.'
+  },
+  'chinese-dialect': {
+    analysisQuestion:'Which Chinese dialect groups are lexically closest to Dalian, and does that relationship stay visible across methods?',
+    dataInputs:['Standardized dialect word lists','ASJP phonetic representations','Regional dialect labels'],
+    analysisProcess:[
+      {title:'Normalize the lexicon',body:'Aligned comparable meanings and cleaned phonetic entries before distance calculation.'},
+      {title:'Calculate distance',body:'Applied ASJP-LDND to quantify pairwise lexical distance between dialect samples.'},
+      {title:'Visualize structure',body:'Used a heatmap for pairwise comparison, MDS for spatial similarity, and a dendrogram for hierarchical grouping.'},
+      {title:'Cross-check interpretation',body:'Compared patterns across all three views to avoid relying on distortions from a single projection.'}
+    ],
+    analysisOutcome:'Dalian consistently appeared close to Jiaodong regions, particularly Yantai and Weihai, across the project visualizations.',
+    limitations:'Lexical distance captures one dimension of dialect similarity and does not fully represent syntax, tone, migration history, or within-region variation.'
+  },
+  'interpersonal-dynamics': {
+    analysisQuestion:'Does behavioral synchrony differ between cooperative and argumentative interactions?',
+    dataInputs:['Recorded interaction sessions','Condition labels','Behavioral synchrony coding'],
+    analysisProcess:[
+      {title:'Define synchrony',body:'Translated observable timing and coordination into a consistent coding rule.'},
+      {title:'Code interactions',body:'Applied the same behavioral criteria to cooperative and argumentative sessions.'},
+      {title:'Aggregate by condition',body:'Calculated synchrony rates within each interaction type before comparing groups.'},
+      {title:'Test the difference',body:'Used statistical comparison to evaluate whether the observed condition gap was unlikely under the null hypothesis.'}
+    ],
+    analysisOutcome:'The project recorded 67.65% synchrony for cooperative interaction and 23.21% for argumentative interaction, with p = .030.',
+    limitations:'The operational definition, sample size, and interaction context limit generalization beyond the recorded study.'
+  },
+  'airline-ux': {
+    analysisQuestion:'Where does the booking interface create unnecessary decision effort before a user can search for a trip?',
+    dataInputs:['Existing booking interface','Task-flow observations','Competitor booking patterns','Form and navigation structure'],
+    analysisProcess:[
+      {title:'Audit the flow',body:'Mapped the steps and controls required to enter trip details, passengers, class, and search criteria.'},
+      {title:'Identify friction',body:'Flagged dispersed inputs, weak action hierarchy, and context switching between navigation and form decisions.'},
+      {title:'Compare patterns',body:'Reviewed how competing booking tools group high-frequency decisions and signal the primary CTA.'},
+      {title:'Redesign and inspect',body:'Reorganized the flow around Book Trip and reviewed the before/after path for clarity and responsive use.'}
+    ],
+    analysisOutcome:'The redesign grouped the full search task around one information hierarchy and a single Search Now action.',
+    limitations:'The project demonstrates an interaction rationale; production conversion impact would require instrumented usability or funnel testing.'
+  },
+  'deportation-data': {
+    analysisQuestion:'What patterns in historical U.S. deportation records can be communicated without treating archival categories as neutral facts?',
+    dataInputs:['Historical deportation records, 1893–1921','Year, demographic, and categorical fields','Archival source documentation'],
+    analysisProcess:[
+      {title:'Audit the archive',body:'Reviewed missing values, historical terminology, category definitions, and the limits of administrative records.'},
+      {title:'Clean for comparison',body:'Standardized selected fields and prepared time and distribution measures for public visualization.'},
+      {title:'Explore patterns',body:'Compared changes over time and demographic distributions to identify patterns worth contextualizing.'},
+      {title:'Design the story',body:'Connected interactive Tableau views with explanatory copy and data limitations on the website.'}
+    ],
+    analysisOutcome:'The final team site paired interactive trends with historical context, while my verified role covered data visualization and web management.',
+    limitations:'Archival categories reflect the institutions that produced the records. Missingness and historical labels limit modern interpretation.'
+  },
+  'spotify-api': {
+    analysisQuestion:'How can nested music API responses be transformed into a reliable table for search and comparison?',
+    dataInputs:['Spotify API search responses','Track, artist, album, and popularity metadata','Nested JSON objects and missing fields'],
+    analysisProcess:[
+      {title:'Inspect the API contract',body:'Identified stable identifiers, nested relationships, pagination, and optional fields.'},
+      {title:'Flatten records',body:'Converted nested track, album, and artist objects into analysis-ready rows.'},
+      {title:'Validate quality',body:'Checked missing values, duplicates, data types, and response errors before comparison.'},
+      {title:'Prepare analysis',body:'Selected reusable fields for search results, descriptive summaries, and downstream visualization.'}
+    ],
+    analysisOutcome:'The project created a repeatable path from API response to usable music dataset.',
+    limitations:'API availability, authorization, request limits, and platform-defined popularity measures constrain the analysis.'
+  },
+  'cs144-web': {
+    analysisQuestion:'Which parts of an interactive web flow benefit from client-side computation, and how can their behavior be verified?',
+    dataInputs:['Client-server request and response states','Browser runtime behavior','WebAssembly integration outcomes'],
+    analysisProcess:[
+      {title:'Map system boundaries',body:'Separated interface state, server responsibilities, and candidate client-side computation.'},
+      {title:'Trace data flow',body:'Followed inputs through requests, processing, responses, and rendered output.'},
+      {title:'Inspect runtime behavior',body:'Compared correctness and integration behavior before and after the WebAssembly path.'},
+      {title:'Verify end to end',body:'Tested the complete browser flow rather than treating the optimized function in isolation.'}
+    ],
+    analysisOutcome:'The analysis connected architecture choices to observable application behavior and documented the integration boundary.',
+    limitations:'The project demonstrates engineering analysis; production-scale performance claims would require controlled benchmarks.'
+  },
+  'kze-marketing': {
+    analysisQuestion:'Which creator and engagement patterns best support influencer selection and campaign allocation?',
+    dataInputs:['500+ TikTok creator profiles','Audience and engagement metrics','Campaign cost and conversion records'],
+    analysisProcess:[
+      {title:'Clean creator data',body:'Standardized account, audience, engagement, and campaign fields and checked inconsistent or missing values.'},
+      {title:'Define comparable metrics',body:'Calculated engagement, reach, ROI, and cost-per-engagement measures instead of ranking creators by follower count alone.'},
+      {title:'Segment performance',body:'Compared creator profiles and identified eight recurring engagement patterns.'},
+      {title:'Support selection',body:'Translated the analysis into creator matching and campaign-allocation recommendations.'}
+    ],
+    analysisOutcome:'Internship materials report higher ROI, lower cost per engagement, and improved reach after the optimization work.',
+    limitations:'Reported business outcomes were not independently rerun for this portfolio, and campaign results may also reflect creative, timing, and budget changes.'
+  },
+  'soul-mate-bridal': {
+    analysisQuestion:'Where do prospective clients leave the journey between discovery and submitting an enquiry?',
+    dataInputs:['Website funnel and user-behavior observations','Contact-form structure','50+ competitor examples','SEO and landing-page experiment results'],
+    analysisProcess:[
+      {title:'Map the funnel',body:'Connected traffic sources, landing pages, service content, contact actions, and form completion into one journey.'},
+      {title:'Locate friction',body:'Reviewed drop-off points, content gaps, form effort, and weak CTA hierarchy.'},
+      {title:'Benchmark competitors',body:'Compared acquisition, information structure, content strategy, and enquiry flows across more than 50 examples.'},
+      {title:'Test changes',body:'Supported landing-page, SEO, and contact-flow changes and monitored conversion-related outcomes.'}
+    ],
+    analysisOutcome:'Internship records report 15% higher lead conversion and 25% organic-search growth following the combined optimization work.',
+    limitations:'The recorded outcomes reflect a combined program of UX, content, and SEO changes, so they should not be attributed to one interface change alone.'
+  }
+};
+
+// 中文备注：把分析内容合并到原项目记录，首页和详情页继续共用一个数据源。
+window.PROJECTS = window.PROJECTS.map((project) => ({
+  ...project,
+  ...(CASE_ANALYSIS[project.id] || {})
+}));
