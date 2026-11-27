@@ -433,8 +433,8 @@ window.PROJECTS = [
     "role": "Product design and full-stack implementation",
     "type": "Independent full-stack project",
     "summary": "Built a language-learning web application connecting practice games, user accounts and score tracking, with a React frontend and an Express/MongoDB backend.",
-    "context": "Vocabulary practice tools often separate solo study from live classroom play and can become unusable when authentication or network services fail.",
-    "problem": "The product needed a no-login learning path while also supporting synchronized rooms, host controls, answer validation, and score updates.",
+    "context": "A language-learning application needs to connect the practice experience with user identity and stored progress.",
+    "problem": "The game interface, authentication and score submission must work together so users can complete a session and see their results.",
     "built": [
       "Developed the React/Vite interface for vocabulary practice and game flows.",
       "Implemented Express APIs and MongoDB persistence for application data.",
@@ -466,7 +466,7 @@ window.PROJECTS = [
         "url": "https://github.com/Wenjing1206/linguaplay"
       }
     ],
-    "analysisQuestion": "How can product-state and test data verify that offline practice and real-time rooms behave consistently?",
+    "analysisQuestion": "How should game interaction, authentication and score persistence connect across the full stack?",
     "dataInputs": [
       "User accounts",
       "Vocabulary and game inputs",
