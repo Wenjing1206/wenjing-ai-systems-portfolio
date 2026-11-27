@@ -1,59 +1,98 @@
-// 中文备注：移动端导航只在用户点击时展开，并同步可访问状态。
-const menuButton = document.querySelector('.menu-button');
-const navigation = document.querySelector('#site-nav');
+// English: Render project cards, skills, experience, and the filterable library.
+// 中文：渲染项目、技能、实习经历和带分类筛选的项目库。
+(() => {
+  const projects = window.PROJECTS;
+  const { categories, skills, experience, resumes, contact } = window.PORTFOLIO;
+  const { escape, projectUrl, external, tags } = window.PortfolioUI;
+  const byId = new Map(projects.map((project) => [project.id, project]));
 
-if (menuButton && navigation) {
-  menuButton.addEventListener('click', () => {
-    const isOpen = navigation.classList.toggle('open');
-    menuButton.setAttribute('aria-expanded', String(isOpen));
+  const card = (project, featured = false) => {
+    const topics = project.categories.map((category) => categories[category]).join(' · ');
+    return '<article class="' + (featured ? 'feature-card' : 'library-card') + '">' +
+      '<p class="card-topic">' + escape(featured ? categories[project.categories[0]] : topics) + '</p>' +
+      '<h3><a href="' + projectUrl(project.id) + '">' + escape(project.title) + '</a></h3>' +
+      '<p class="card-org">' + escape(project.type) + '</p>' +
+      '<p class="card-copy">' + escape(project.summary) + '</p>' +
+      '<dl class="card-facts"><div><dt>My role</dt><dd>' + escape(project.role) + '</dd></div>' +
+      '<div><dt>Key contribution</dt><dd>' + escape(project.keyContribution || project.built[0]) + '</dd></div></dl>' +
+      tags(project.tech.slice(0, 5)) +
+      '<div class="card-links"><a class="text-link" href="' + projectUrl(project.id) + '" aria-label="View case study: ' +
+      escape(project.title) + '">View case study <span aria-hidden="true">↗</span></a>' +
+      (project.links[0] ? external(project.links[0].url, project.links[0].label) : '') + '</div></article>';
+  };
+
+  document.querySelector('#featured-grid').innerHTML = projects.filter((project) => project.featured)
+    .map((project) => card(project, true)).join('');
+
+  const filterGroup = document.querySelector('#project-filters');
+  const library = document.querySelector('#project-library');
+  const count = document.querySelector('#project-count');
+  filterGroup.innerHTML = Object.entries(categories).map(([key, title]) =>
+    '<button type="button" data-filter="' + key + '" aria-pressed="false">' + escape(title) + '</button>').join('');
+
+  // English: Use a query parameter so filtered views can be shared and revisited.
+  // 中文：把分类保存于 URL，允许分享、重载和浏览器前进后退。
+  const getFilter = () => new URLSearchParams(location.search).get('filter') ||
+    (location.hash === '#research' ? 'research' : 'all');
+  const renderLibrary = () => {
+    const requested = getFilter();
+    const filter = Object.hasOwn(categories, requested) ? requested : 'all';
+    const visible = projects.filter((project) =>
+      filter === 'all' || (filter === 'featured' ? project.featured : project.categories.includes(filter)));
+    filterGroup.querySelectorAll('button').forEach((button) =>
+      button.setAttribute('aria-pressed', String(button.dataset.filter === filter)));
+    library.innerHTML = visible.length ? visible.map((project) => card(project)).join('') : '<p>No projects in this category.</p>';
+    count.textContent = visible.length + (visible.length === 1 ? ' project' : ' projects');
+  };
+
+  filterGroup.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-filter]');
+    if (!button || button.getAttribute('aria-pressed') === 'true') return;
+    const url = new URL(location.href);
+    if (url.hash === '#research') url.hash = '#library';
+    if (button.dataset.filter === 'all') url.searchParams.delete('filter');
+    else url.searchParams.set('filter', button.dataset.filter);
+    history.pushState(null, '', url);
+    renderLibrary();
+  });
+  window.addEventListener('popstate', renderLibrary);
+  window.addEventListener('hashchange', renderLibrary);
+  renderLibrary();
+
+  const filterUrl = (category) => '?filter=' + category + '#library';
+  document.querySelector('#skill-grid').innerHTML = skills.map(([category, ...items]) =>
+    '<article class="skill-card"><h3>' + escape(category === 'product' ? 'Product & Experimentation' :
+      category === 'analytics' ? 'Data Analytics & Business Intelligence' : categories[category]) + '</h3>' +
+    '<ul class="tags" aria-label="Filter projects by skill area">' + items.map((skill) =>
+      '<li><a data-skill href="' + filterUrl(category) + '" aria-label="' + escape(skill + ' · Explore related projects') +
+      '">' + escape(skill) + '</a></li>').join('') + '</ul>' +
+    '<a class="text-link" data-skill href="' + filterUrl(category) + '" aria-label="Explore projects in ' +
+    escape(categories[category]) + '">Related projects <span aria-hidden="true">↗</span></a></article>'
+  ).join('');
+
+  document.querySelector('#skill-grid').addEventListener('click', (event) => {
+    const link = event.target.closest('[data-skill]');
+    if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    history.pushState(null, '', link.href);
+    renderLibrary();
+    document.querySelector('#library-title').focus({ preventScroll: true });
+    document.querySelector('#library').scrollIntoView();
   });
 
-  navigation.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      navigation.classList.remove('open');
-      menuButton.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
+  document.querySelector('#experience-list').innerHTML = experience.map((entry) =>
+    '<article class="experience-item"><p class="experience-meta"><strong>' + escape(entry.date) +
+    '</strong><br>' + escape(entry.place) + '</p><div><h3>' + escape(entry.company) +
+    '</h3><p class="experience-role">' + escape(entry.role) + '</p><p>' + escape(entry.description) +
+    '</p><div class="profile-links">' + entry.projects.map((id) =>
+      '<a class="text-link" href="' + projectUrl(id) + '">' + escape(byId.get(id).title) + ' ↗</a>').join('') + '</div></div></article>'
+  ).join('');
 
-const projects = window.PROJECTS || [];
-const featuredGrid = document.querySelector('#featured-grid');
-const projectLibrary = document.querySelector('#project-library');
-
-const tagMarkup = (tags, light = false) => `<div class="tag-row${light ? ' light' : ''}">${tags.slice(0, 4).map((tag) => `<span>${tag}</span>`).join('')}</div>`;
-
-// 中文备注：首页只展示六个重点项目，其余项目通过筛选器快速浏览。
-if (featuredGrid) {
-  featuredGrid.innerHTML = projects.filter((project) => project.featured).map((project, index) => {
-    const visual = project.cover
-      ? `<div class="project-image"><img src="${project.cover}" alt="${project.title} project evidence"></div>`
-      : `<div class="mini-system" aria-hidden="true"><span>${project.process[0]}</span><i>→</i><span>${project.process[Math.floor(project.process.length / 2)]}</span><i>→</i><span>${project.process.at(-1)}</span></div>`;
-    // 中文备注：前三个主线项目采用通栏，突出 AI、Data 与 Product 的关联。
-    return `<article class="feature-card ${index < 3 ? 'wide' : ''}" style="--accent:var(--${project.accent || 'blue'})">
-      <div class="feature-card-top"><span>${String(index + 1).padStart(2, '0')} ${project.flagship ? '/ FLAGSHIP' : ''}</span><span>${project.categories[0]}</span></div>
-      ${visual}<div class="feature-copy">${tagMarkup(project.tags, true)}<h3>${project.title}</h3><p>${project.summary}</p><a class="text-link" href="project.html?id=${project.id}">Read case study <span aria-hidden="true">↗</span></a></div>
-    </article>`;
-  }).join('');
-}
-
-const renderLibrary = (filter = 'All') => {
-  if (!projectLibrary) return;
-  const visible = projects.filter((project) => filter === 'All' || project.categories.includes(filter));
-  projectLibrary.innerHTML = visible.map((project) => `<a class="library-card" href="project.html?id=${project.id}">
-    <div><span class="library-type">${project.categories.join(' · ')}</span><h3>${project.title}</h3><p>${project.subtitle}</p></div><span class="library-arrow" aria-hidden="true">↗</span>
-  </a>`).join('');
-};
-
-renderLibrary();
-document.querySelectorAll('.filter').forEach((button) => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.filter').forEach((item) => {
-      item.classList.toggle('active', item === button);
-      item.setAttribute('aria-pressed', String(item === button));
-    });
-    renderLibrary(button.dataset.filter);
-  });
-});
-
-const year = document.querySelector('#year');
-if (year) year.textContent = new Date().getFullYear();
+  document.querySelector('#resume-list').innerHTML = resumes.map(({ title, pdf }) =>
+    '<div class="resume-row"><h4>' + escape(title) + '</h4><div class="resume-actions">' +
+    (pdf ? '<a class="text-link" href="' + escape(pdf) + '" target="_blank" rel="noopener noreferrer">Preview</a>' +
+      '<a class="text-link" href="' + escape(pdf) + '" download>Download</a>' :
+      '<a class="text-link" aria-label="Request ' + escape(title) + ' resume by email" href="mailto:' +
+      escape(contact.email) + '?subject=' + encodeURIComponent(title + ' resume') + '">Request by email</a>') + '</div></div>'
+  ).join('');
+})();

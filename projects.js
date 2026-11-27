@@ -1,113 +1,13 @@
-// English: Shared project content for portfolio cards and case studies.
-// 中文：项目卡片与详情页共用内容；个人贡献、评估结果和证据范围保持一致。
+// English: Project content shared by home cards and case-study pages.
+// 中文：集中维护所有首页卡片和详情页的项目内容。
 window.PROJECTS = [
   {
-    "id": "shopping-copilot",
-    "title": "Shopping Copilot",
-    "subtitle": "Keeping shopping preferences consistent across a changing conversation",
-    "featured": true,
-    "flagship": true,
-    "depth": "full",
-    "accent": "blue",
-    "categories": [
-      "AI Product",
-      "Data & Analytics"
-    ],
-    "tags": [
-      "AI Agent",
-      "Dialogue State",
-      "Search & Recommendation",
-      "Evaluation"
-    ],
-    "role": "Conversation State Management / AI Agent Design · Team project",
-    "type": "TikTok TechJam 2026",
-    "summary": "Owned conversation state management in a team shopping copilot: structured user constraints, resolved preference changes, and supplied state signals for clarification and reranking.",
-    "context": "E-commerce search breaks when a user is vague, changes priorities, or rejects a previous preference. The challenge required an agent to find a hidden target product within ten turns across Buying, Browsing, Intent Override, and Boundary scenarios.",
-    "problem": "The system needed to preserve useful context without letting stale constraints poison later recommendations. It also had to expose evaluator-valid output and remain useful when semantic resolution was unavailable.",
-    "built": [
-      "Represented budget, size, brand and usage needs as structured conversation constraints rather than repeatedly interpreting the entire chat.",
-      "Handled preference overrides, exclusions and no-preference replies so outdated requirements would not continue filtering recommendations.",
-      "Used confidence and conversation stagnation signals to support clarification and next-action decisions.",
-      "Reviewed paraphrases, short replies, misspellings and vague requests to diagnose state and constraint failures."
-    ],
-    "process": [
-      "User message",
-      "Intent + constraint extraction",
-      "Dialogue state update",
-      "Hybrid retrieval",
-      "Constraint-aware reranking",
-      "Clarify or recommend"
-    ],
-    "tech": [
-      "Python",
-      "LLM",
-      "BM25",
-      "Embeddings",
-      "Information Retrieval",
-      "State Management",
-      "Reranking",
-      "Evaluation"
-    ],
-    "results": [
-      "Implemented a session-level representation of constraints and preference changes.",
-      "Supported team evaluation using HitRate@K, MRR and MTTC; these are evaluation criteria, not claimed personal score improvements."
-    ],
-    "learned": "Recommendation failures often start before ranking: a stale budget or misread size changes which products can be considered.",
-    "links": [
-      {
-        "label": "Team repository",
-        "url": "https://github.com/TikTok-Techjam-0x00/shopping-copilot"
-      }
-    ],
-    "analysisQuestion": "How can conversation data reveal when the agent should clarify, retrieve, rerank, or recommend?",
-    "dataInputs": [
-      "50,000-product frozen catalog",
-      "200 labeled public sessions",
-      "Turn-level user messages and agent outputs",
-      "Scenario labels: Buying, Browsing, Intent Override, Boundary"
-    ],
-    "analysisProcess": [
-      {
-        "title": "Structure each turn",
-        "body": "Converted free-text requests into intent, hard constraints, soft preferences, exclusions, no-preference signals, and state transitions."
-      },
-      {
-        "title": "Segment behavior",
-        "body": "Compared sessions by scenario so an average score could not hide failures in override, boundary, or exploratory browsing cases."
-      },
-      {
-        "title": "Measure retrieval quality",
-        "body": "Tracked HitRate@K and MRR to test whether the hidden target appeared and how highly it ranked; MTTC captured how many turns the agent needed."
-      },
-      {
-        "title": "Diagnose failures",
-        "body": "Reviewed paraphrases, typos, vague replies, negation, and stale constraints. One audit found “up to 30mm” being misread as a price ceiling."
-      },
-      {
-        "title": "Turn findings into policy",
-        "body": "Used confidence, constraint coverage, repeated questions, and recommendation stagnation to decide the next action."
-      }
-    ],
-    "analysisOutcome": "When a user changes a requirement, update the affected state before retrieval. When the request remains ambiguous, clarify the missing constraint.",
-    "productOutcome": "Contributed the Conversation State Management module and its interfaces to the team shopping copilot.",
-    "limitations": "A team hackathon project. My contribution centers on conversation state management; full-system retrieval, ranking and evaluation are shared team work."
-  },
-  {
     "id": "enterprise-ai-auditing",
-    "title": "Enterprise AI Smart Auditing",
+    "title": "Enterprise AI Agent & Intelligent Auditing System",
     "subtitle": "Structuring report pre-review with agents, retrieval and logic checks",
     "featured": true,
-    "flagship": true,
-    "depth": "full",
-    "accent": "cyan",
     "categories": [
-      "AI Product"
-    ],
-    "tags": [
-      "Multi-Agent",
-      "RAG",
-      "Rule Engine",
-      "Enterprise AI"
+      "ai"
     ],
     "role": "AI Agent Development & Data Governance Intern",
     "type": "PetroChina Planning & Engineering Institute",
@@ -151,42 +51,128 @@ window.PROJECTS = [
     ],
     "analysisProcess": [
       {
-        "title": "Map the review task",
-        "body": "Identify the report elements and business checks required before a reviewer can form an opinion."
+        "title": "Element identification",
+        "body": "Configured agent prompts and input/output fields to surface report elements needed for downstream checks."
       },
       {
-        "title": "Prepare knowledge sources",
-        "body": "Organize regulations, standards and historical reports for retrieval."
+        "title": "Logic checking with retrieved evidence",
+        "body": "Organized regulations, industry standards and historical reports as retrieval sources. Configured model settings and connected retrieved context to logic checks."
       },
       {
-        "title": "Configure the workflow",
-        "body": "Connect extraction, logic-checking and suggestion-generation nodes with explicit input and output fields."
-      },
-      {
-        "title": "Inspect bad cases",
-        "body": "Read intermediate outputs to identify whether an issue began with extraction, retrieved context or the generated suggestion."
+        "title": "Draft comments for human review",
+        "body": "Passed the structured findings to the comment-generation stage. Reviewers could inspect the intermediate node outputs and review the draft suggestions."
       }
     ],
     "analysisOutcome": "Inspect the stage that introduced the error before changing prompts or retrieval configuration.",
     "productOutcome": "A report pre-review workflow designed to support reviewers with structured elements, checks and draft suggestions.",
-    "limitations": "Implemented through an enterprise AI platform. Internal code and documents are not public, and no review-efficiency percentage is claimed here."
+    "limitations": "The implementation ran in an enterprise AI platform. Internal workflow exports, reports, and aggregate evaluation logs are private.",
+    "period": "Sep 2025 – Jun 2026",
+    "keyContribution": "Configured a three-stage, retrieval-grounded report pre-review workflow.",
+    "objective": "Give reviewers draft checks and comments with enough intermediate evidence to trace a finding back to the report or knowledge source.",
+    "architectureLabel": "Conceptual workflow based on the configured pre-review stages",
+    "challenge": "When a draft comment looked wrong, I inspected the upstream output before editing prompts. A missing report element, a weak retrieval result, and an unsupported conclusion called for different fixes.",
+    "example": {
+      "language": "Text",
+      "title": "Bad-case review checklist",
+      "note": "Illustrative checklist. The internal inputs, outputs and prompts are private.",
+      "code": "INPUT       Report section and check under review\nEXTRACTION  Is the required field present and correctly mapped?\nRETRIEVAL   Does the source passage support the check?\nGENERATION  Does the draft cite the relevant evidence?\nREVIEW      Flag the first stage that introduced the issue."
+    },
+    "nextSteps": "Create reviewer-labeled regression cases for missing fields, weak retrieval and unsupported draft comments."
+  },
+  {
+    "id": "shopping-copilot",
+    "title": "Conversational Shopping Copilot & Recommendation Optimization",
+    "subtitle": "Keeping shopping preferences consistent across a changing conversation",
+    "featured": true,
+    "categories": [
+      "ai",
+      "product"
+    ],
+    "role": "Conversation State Management / AI Agent Design · Team project",
+    "type": "TikTok TechJam 2026",
+    "summary": "Owned conversation state management in a team shopping copilot: structured user constraints, resolved preference changes, and supplied state signals for clarification and reranking.",
+    "context": "E-commerce search breaks when a user is vague, changes priorities, or rejects a previous preference. The challenge required an agent to find a hidden target product within ten turns across Buying, Browsing, Intent Override, and Boundary scenarios.",
+    "problem": "The system needed to preserve useful context without letting stale constraints poison later recommendations. It also had to expose evaluator-valid output and remain useful when semantic resolution was unavailable.",
+    "built": [
+      "Represented budget, size, brand and usage needs as structured conversation constraints rather than repeatedly interpreting the entire chat.",
+      "Handled preference overrides, exclusions and no-preference replies so outdated requirements would not continue filtering recommendations.",
+      "Used confidence and conversation stagnation signals to support clarification and next-action decisions.",
+      "Reviewed paraphrases, short replies, misspellings and vague requests to diagnose state and constraint failures."
+    ],
+    "process": [
+      "User message",
+      "Intent + constraint extraction",
+      "Dialogue state update",
+      "Hybrid retrieval",
+      "Constraint-aware reranking",
+      "Clarify or recommend"
+    ],
+    "tech": [
+      "Python",
+      "LLM",
+      "BM25",
+      "Embeddings",
+      "Information Retrieval",
+      "State Management",
+      "Reranking",
+      "Evaluation"
+    ],
+    "results": [
+      "Delivered the conversation-state module and its structured handoff to retrieval and ranking.",
+      "Used HitRate@K to measure target coverage, MRR to measure rank, and MTTC to track turns to completion in the team evaluation.",
+      "Reviewed override and ambiguous-input cases as regression scenarios. Evaluation metrics are described at the team level."
+    ],
+    "learned": "Recommendation failures often start before ranking: a stale budget or misread size changes which products can be considered.",
+    "links": [],
+    "analysisQuestion": "How can conversation data reveal when the agent should clarify, retrieve, rerank, or recommend?",
+    "dataInputs": [
+      "50,000-product frozen catalog",
+      "200 labeled public sessions",
+      "Turn-level user messages and agent outputs",
+      "Scenario labels: Buying, Browsing, Intent Override, Boundary"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Track constraints across turns",
+        "body": "Represent hard constraints, preferences, exclusions and no-preference replies as state. Budget, size, brand and intended use can update independently."
+      },
+      {
+        "title": "Resolve overrides and decide what to ask",
+        "body": "Replace the affected constraint when the user changes it while carrying forward unrelated requirements. Confidence, missing constraints and repeated recommendations informed clarification."
+      },
+      {
+        "title": "Supply state to retrieval and ranking",
+        "body": "The team combined lexical and embedding retrieval. The state module supplied structured constraints for local reranking and candidate-level diagnostics. I examined the reranking behavior on the top 100 candidates."
+      },
+      {
+        "title": "Test difficult dialogs",
+        "body": "Reviewed paraphrases, short replies, misspellings and vague requests. Inspected low-ranked examples and separated state errors from retrieval and tie-breaking problems."
+      }
+    ],
+    "analysisOutcome": "When a user changes a requirement, update the affected state before retrieval. When the request remains ambiguous, clarify the missing constraint.",
+    "productOutcome": "Contributed the Conversation State Management module and its interfaces to the team shopping copilot.",
+    "limitations": "The team repository is private. Retrieval, ranking and end-to-end evaluation were shared team work. The benchmark used a fixed catalog and challenge scenarios.",
+    "period": "Aug 2026",
+    "keyContribution": "Owned conversation state and preference overrides for a team recommendation system.",
+    "objective": "Carry valid preferences across a multi-turn conversation, apply explicit updates, and decide when missing information warrants clarification.",
+    "architectureLabel": "Team pipeline with the conversation-state handoff",
+    "challenge": "A size phrase such as “up to 30mm” was misread as a price ceiling in one audit. Checking the parsed field first showed where the error entered before it affected the candidate ranking.",
+    "example": {
+      "language": "JSON",
+      "title": "Preference override in a two-turn conversation",
+      "note": "Illustrative state snapshot written for this case study.",
+      "code": "{\n  \"before\": { \"budget_max\": 120, \"brand\": \"Brand A\" },\n  \"message\": \"Actually, up to 150 is fine.\",\n  \"after\":  { \"budget_max\": 150, \"brand\": \"Brand A\" }\n}"
+    },
+    "nextSteps": "Add per-scenario regression thresholds and compare rank movement before and after individual state-policy changes."
   },
   {
     "id": "carbon-data-platform",
-    "title": "Carbon Data Governance & BI",
+    "title": "Carbon Data Governance & Analytics Platform",
     "subtitle": "From fragmented registry exports to 378 governed project records",
     "featured": true,
-    "depth": "standard",
-    "accent": "green",
     "categories": [
-      "Data & Analytics",
-      "AI Product"
-    ],
-    "tags": [
-      "Data Governance",
-      "NLP",
-      "BI",
-      "Data Product"
+      "governance",
+      "analytics"
     ],
     "role": "Data Governance Intern",
     "type": "PetroChina Planning & Engineering Institute",
@@ -200,27 +186,38 @@ window.PROJECTS = [
       "Prepared governed project information for database queries and BI exploration."
     ],
     "process": [
-      "Collect",
-      "Standardize",
-      "Validate",
-      "Enrich",
-      "Analyze",
-      "Monitor"
+      "Registry exports and documents",
+      "Field mapping",
+      "Standardization and source checks",
+      "Project and methodology table",
+      "ECharts exploration"
     ],
     "tech": [
       "Excel",
-      "Data Cleaning",
+      "ETL",
       "Data Standardization",
       "Data Quality",
-      "Data Governance",
-      "BI"
+      "ECharts"
     ],
     "results": [
       "Consolidated the available source material into 378 governed project records.",
       "Organized cross-registry information into a more consistent basis for project lookup and comparison."
     ],
     "learned": "Cross-source governance starts with agreeing what a field means. Matching column names alone does not make records comparable.",
-    "links": [],
+    "links": [
+      {
+        "label": "Verra VCS Registry",
+        "url": "https://registry.verra.org/app/search/VCS/All%20Projects"
+      },
+      {
+        "label": "Gold Standard Registry",
+        "url": "https://www.goldstandard.org/impact-registry"
+      },
+      {
+        "label": "CCER Registry",
+        "url": "https://ccer.cets.org.cn/projectPublicity/projectPublicityList"
+      }
+    ],
     "analysisQuestion": "How can fragmented carbon-project records become consistent enough for lifecycle monitoring and market analysis?",
     "dataInputs": [
       "CCER project information",
@@ -230,41 +227,117 @@ window.PROJECTS = [
     ],
     "analysisProcess": [
       {
-        "title": "Collect source material",
-        "body": "Combine downloadable spreadsheets with information from registry pages, project details and reports."
+        "title": "Collect registry material",
+        "body": "Used Verra VCS, Gold Standard and CCER. Combined downloadable Excel/CSV exports with manual review of registry pages, project-detail pages and PDFs."
       },
       {
-        "title": "Align fields",
-        "body": "Bring different source labels and record structures into a consistent project table."
+        "title": "Map fields and harmonize values",
+        "body": "Aligned source-specific labels in a shared schema. Organized project details and methodology references so each record could be reviewed in context."
       },
       {
-        "title": "Check and resolve",
-        "body": "Review missing, inconsistent and potentially duplicated information against the original sources."
+        "title": "Check completeness and consistency",
+        "body": "Reviewed missing, duplicate and unusual values against registry listings or underlying documents. Kept source context available during reconciliation."
       },
       {
-        "title": "Prepare analysis-ready records",
-        "body": "Consolidate the cleaned information into 378 project records for downstream queries and analysis."
+        "title": "Make the records usable in analysis",
+        "body": "Prepared the consolidated project information for lookup and carbon-asset BI exploration. Used ECharts to prototype views for carbon-asset benefits and trading potential."
       }
     ],
     "analysisOutcome": "Resolve source inconsistencies before aggregating projects or interpreting regional and mechanism-level patterns.",
     "productOutcome": "A consolidated project-data foundation supporting carbon-project lookup and analysis.",
-    "limitations": "The 378-record count is based on my completed internship work. This public case study does not distribute internal files or claim an independently reproduced quality-improvement percentage."
+    "limitations": "The governed table and internal BI assets are private. Collection combined exports and manual extraction; the public evidence consists of the method and final record count.",
+    "period": "Sep 2025 – Jun 2026",
+    "keyContribution": "Standardized, checked, and consolidated 378 project records across three registry sources.",
+    "objective": "Create a consistent project table that supports comparison across registries and makes it possible to trace discrepancies back to the source.",
+    "architectureLabel": "Registry-to-analysis data flow",
+    "challenge": "The Gold Standard starting view is an issuance list. Treating every issuance as a project can inflate project counts. Review registry grain and project identity before joining or aggregating records.",
+    "example": {
+      "language": "Text",
+      "title": "Example mapping fields",
+      "note": "Illustrative field map. Labels and values are examples for the public case study.",
+      "code": "registry_name    VCS | Gold Standard | CCER\nproject_id       Identifier in the source registry\nmethodology      Source methodology reference\nsource_ref       Registry listing or supporting document"
+    },
+    "nextSteps": "Document source snapshots, unique-key rules, and row-level validation outcomes for repeatable refreshes."
+  },
+  {
+    "id": "kze-marketing",
+    "title": "Creator Analytics & Partnership Decision Framework",
+    "subtitle": "Comparing creators beyond follower count",
+    "categories": [
+      "analytics"
+    ],
+    "role": "Data Analyst Intern",
+    "type": "KZE Group LLC",
+    "summary": "Analyzed TikTok creator reach, engagement and posting activity across follower segments, and built a weighted prioritization framework to support partnership outreach.",
+    "context": "Creator decisions combined inconsistent audience, content, and campaign metrics.",
+    "problem": "The team needed comparable features and a decision framework rather than a spreadsheet of raw counts.",
+    "built": [
+      "Compared video reach, engagement rates and posting activity across follower segments to identify potential partnership candidates.",
+      "Developed a weighted scoring framework combining content performance and partnership accessibility.",
+      "Structured partnership analysis around outreach, response, qualification and collaboration stages to locate potential conversion bottlenecks."
+    ],
+    "process": [
+      "Segment by follower count",
+      "Compare reach and engagement",
+      "Score performance and accessibility",
+      "Review outreach funnel"
+    ],
+    "tech": [
+      "Creator Analytics",
+      "Segmentation",
+      "Weighted Scoring",
+      "Funnel Analysis"
+    ],
+    "results": [
+      "Produced a creator-prioritization framework to support outreach decisions.",
+      "Connected creator performance measures with partnership accessibility and funnel stages."
+    ],
+    "learned": "A strong creator profile is only one input to a partnership decision; reachability and progression through outreach also matter.",
+    "links": [],
+    "analysisQuestion": "Which creator and engagement patterns best support influencer selection and campaign allocation?",
+    "dataInputs": [
+      "Creator profiles and follower segments",
+      "Video reach, engagement and posting activity",
+      "Partnership accessibility and outreach-stage information"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Compare performance",
+        "body": "Examine reach, engagement and activity within follower segments."
+      },
+      {
+        "title": "Prioritize candidates",
+        "body": "Combine performance and accessibility criteria in an explicit weighted framework."
+      },
+      {
+        "title": "Examine the partnership journey",
+        "body": "Use outreach, response, qualification and collaboration stages to frame where candidates stop progressing."
+      }
+    ],
+    "analysisOutcome": "Use comparable creator metrics and accessibility criteria to decide whom to contact first.",
+    "productOutcome": "A structured approach to creator selection and partnership analysis.",
+    "limitations": "Creator-level data, scoring weights, and conversion totals are private. Funnel interpretation depends on complete outreach history.",
+    "featured": true,
+    "period": "Jun 2024 – Sep 2024",
+    "keyContribution": "Developed a weighted creator score and mapped the four-stage partnership funnel.",
+    "objective": "Compare creators within meaningful follower groups and give the outreach team a consistent way to prioritize prospects.",
+    "architectureLabel": "Conceptual scoring and partnership funnel",
+    "challenge": "Raw follower count favors larger accounts. Comparing within follower segments and including partnership accessibility made the outreach order better reflect the decision the team needed to make.",
+    "example": {
+      "language": "Text",
+      "title": "Partnership funnel stages",
+      "note": "Stage sequence only. Internship conversion counts and weights are private.",
+      "code": "Outreach → Response → Qualification → Collaboration\nStage conversion = progressed creators / eligible creators at prior stage"
+    },
+    "nextSteps": "Record stage timestamps and review score calibration once enough prospects have reached collaboration."
   },
   {
     "id": "tabular-classification",
-    "title": "Tabular Classification & Model Evaluation",
+    "title": "Applied Machine Learning & Predictive Analytics",
     "subtitle": "When a higher ranking score does not mean a better fixed-threshold decision",
-    "featured": true,
-    "depth": "full",
-    "accent": "blue",
+    "featured": false,
     "categories": [
-      "Data & Analytics"
-    ],
-    "tags": [
-      "Machine Learning",
-      "Cross-validation",
-      "Class Imbalance",
-      "Evaluation"
+      "ml"
     ],
     "role": "Experiment implementation and analysis · Individual coursework",
     "type": "NTU IN6227 · Data Mining",
@@ -330,24 +403,413 @@ window.PROJECTS = [
         "label": "Code, results and methodology",
         "url": "https://github.com/Wenjing1206/in6227-assignment-1"
       }
-    ]
+    ],
+    "period": "2026 · NTU coursework",
+    "keyContribution": "Reproduced held-out metrics from saved predictions and quantified uncertainty in the AP difference.",
+    "objective": "Compare ranking quality and fixed-threshold decisions with the same splits, metric definitions and held-out evaluation.",
+    "architectureLabel": "Model selection and held-out evaluation flow",
+    "challenge": "A higher ranking metric can coexist with lower F1 at a chosen decision threshold. Evaluate intended use before interpreting a small AP difference.",
+    "evidenceTable": {
+      "caption": "Held-out results for both fitted models",
+      "headings": [
+        "Model",
+        "Average precision",
+        "F1 at 0.5"
+      ],
+      "rows": [
+        [
+          "Logistic Regression",
+          "0.7023",
+          "0.6295"
+        ],
+        [
+          "Random Forest",
+          "0.7084",
+          "0.6242"
+        ]
+      ]
+    },
+    "nextSteps": "Review the choice of operating threshold against a documented operational cost or error budget.",
+    "example": {
+      "language": "Python",
+      "title": "Shared cross-validation splits and model selection",
+      "note": "Excerpt from the public experiment source. Both model families use the same fold list.",
+      "code": "cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=SEED)\nfolds = list(cv.split(x_train, y_train))\n\nsearch = GridSearchCV(\n    make_pipeline(numeric, categorical, name), grid,\n    scoring={\"ap\": \"average_precision\", \"roc_auc\": \"roc_auc\", \"f1\": \"f1\"},\n    refit=\"ap\", cv=folds, n_jobs=args.jobs, error_score=\"raise\", return_train_score=True,\n)"
+    }
+  },
+  {
+    "id": "breast-tumor-classification",
+    "title": "Breast Tumor Classification & Neural Network Optimization",
+    "type": "NTU IN6242 · Deep Learning Foundations",
+    "period": "Oct 2026",
+    "categories": [
+      "ml",
+      "research"
+    ],
+    "role": "Model implementation and experimental comparison · Coursework",
+    "summary": "Compared a PyTorch binary-classification baseline with L2 regularization, Dropout, and Early Stopping on 569 samples with 30 diagnostic features.",
+    "keyContribution": "Built a leakage-aware experiment to compare regularization and generalization.",
+    "context": "The Wisconsin Diagnostic Breast Cancer dataset is a small tabular classification dataset. A network can improve on the training set while losing performance on held-out samples.",
+    "problem": "Separate improvements in generalization from effects caused by preprocessing or a favorable split.",
+    "objective": "Compare baseline, L2, Dropout, and Early Stopping with consistent data partitions and evaluation rules.",
+    "dataInputs": [
+      "569 samples",
+      "30 diagnostic features",
+      "Binary benign and malignant labels"
+    ],
+    "built": [
+      "Implemented a multilayer binary classifier in PyTorch using ReLU, binary cross-entropy and Adam.",
+      "Applied stratified splitting and fit the feature scaler on the training partition.",
+      "Designed controlled comparisons for L2 regularization, Dropout, and Early Stopping."
+    ],
+    "process": [
+      "Stratified splits",
+      "Training-only scaling",
+      "Baseline and variants",
+      "Validation trajectories",
+      "Held-out comparison"
+    ],
+    "tech": [
+      "Python",
+      "PyTorch",
+      "Scikit-learn",
+      "NumPy",
+      "Matplotlib"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Prevent preprocessing leakage",
+        "body": "Split the data before fitting the standardization transform and carry the training-derived transform to the held-out partitions."
+      },
+      {
+        "title": "Change one regularization strategy at a time",
+        "body": "Train a common baseline and compare it with L2, Dropout, and validation-based Early Stopping."
+      },
+      {
+        "title": "Examine generalization",
+        "body": "Compare training and validation loss behavior alongside held-out classification performance to identify overfitting."
+      }
+    ],
+    "challenge": "A small dataset makes results sensitive to split composition. Stratification helps preserve the class balance, and controlled variants make the source of a change easier to interpret.",
+    "results": [
+      "Completed the baseline and three regularization comparisons on the same diagnostic dataset."
+    ],
+    "productOutcome": "An academic comparison of regularization strategies with a reproducible evaluation design.",
+    "limitations": "Exact scores and training curves are not included in the public materials. The benchmark study does not evaluate clinical use.",
+    "nextSteps": "Publish experiment logs and compare performance across multiple seeds when the original materials are available.",
+    "links": [],
+    "example": {
+      "language": "Text",
+      "title": "Regularization experiment design",
+      "note": "Conceptual experiment matrix based on the four coursework conditions.",
+      "code": "Baseline        Shared model and fixed training budget\nL2              Add a weight penalty\nDropout         Apply dropout during training\nEarly Stopping  Monitor validation loss for stopping"
+    }
+  },
+  {
+    "id": "internship-application-management",
+    "title": "Internship Application Management System",
+    "type": "NTU · Enterprise Application Development",
+    "period": "Nov 2026",
+    "categories": [
+      "engineering"
+    ],
+    "role": "Full-stack implementation · Individual coursework",
+    "summary": "Built an account-scoped internship tracker with Spring Boot, MySQL and Thymeleaf, covering registration, seven application statuses, filtering, and a dashboard.",
+    "keyContribution": "Implemented account isolation at the service and repository boundary and verified it through integration tests.",
+    "context": "Internship applications span companies, deadlines and changing stages. Users need persistent, searchable records tied to their accounts.",
+    "problem": "Support the application lifecycle while making sure one user cannot read or modify another user’s records.",
+    "objective": "Deliver registration, login, application CRUD, seven statuses, search, filtering, dashboard, persistence, and logout with account isolation.",
+    "dataInputs": [
+      "User accounts and unique email",
+      "Application records with owner, company and status",
+      "Dashboard counts derived from an account’s records"
+    ],
+    "built": [
+      "Designed the Spring MVC flow with controllers, services, repositories and Thymeleaf templates.",
+      "Configured Spring Security and implemented owner-scoped application access.",
+      "Defined the MySQL schema with Flyway and wrote service and integration tests."
+    ],
+    "process": [
+      "Thymeleaf and Bootstrap",
+      "Spring MVC controllers",
+      "Services and security",
+      "JPA repositories",
+      "MySQL and Flyway"
+    ],
+    "tech": [
+      "Java 21",
+      "Spring Boot",
+      "Spring MVC",
+      "Spring Security",
+      "Spring Data JPA",
+      "MySQL",
+      "Thymeleaf",
+      "Bootstrap",
+      "Flyway"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Model the relationship",
+        "body": "A user can own multiple internship applications. Each application row refers to one user, and the dashboard derives counts from the signed-in user’s records."
+      },
+      {
+        "title": "Enforce ownership during access",
+        "body": "The service resolves the signed-in user and retrieves application records by ID and owner. List, search, and dashboard operations are also scoped to the owner."
+      },
+      {
+        "title": "Verify across the request lifecycle",
+        "body": "Integration tests exercise registration, authentication, account isolation and application flows. Unit tests exercise the service behavior used by controllers."
+      }
+    ],
+    "example": {
+      "language": "Text",
+      "title": "Ownership lookup and database relationship",
+      "note": "Repository method from the project, followed by a simplified ERD.",
+      "code": "Optional<InternshipApplication> findByIdAndUserId(Long id, Long userId);\n\napp_users (id PK)   1 ─────── *   internship_applications (id PK, user_id FK)"
+    },
+    "challenge": "Checking authentication alone cannot establish ownership of a requested application. Scoping lookup by both application ID and owner keeps that decision on the backend.",
+    "results": [
+      "Delivered the personal tracker with seven statuses, account isolation, persistent records and a dashboard.",
+      "50 tests passed in the documented project test run, including 35 integration tests."
+    ],
+    "productOutcome": "A single place to update application status, retrieve past records and see the current pipeline.",
+    "limitations": "The original source and live demo are not linked publicly. The project was scoped to a personal application tracker.",
+    "nextSteps": "Document the tested request flows and add a shareable demo dataset if the project is published.",
+    "links": []
+  },
+  {
+    "id": "association-rule-benchmark",
+    "title": "Association Rule Mining & Algorithm Benchmarking",
+    "type": "NTU IN6227 · Data Mining",
+    "period": "2026 · NTU coursework",
+    "categories": [
+      "ml"
+    ],
+    "role": "Experiment design and analysis · Coursework",
+    "summary": "Benchmarked brute-force frequent-itemset enumeration against Apriori while varying the number of distinct items and transactions.",
+    "context": "Association-rule mining first needs frequent itemsets. Candidate enumeration can dominate runtime as the number of distinct items grows.",
+    "problem": "Separate the effect of increasing item dimensionality from the effect of adding more transactions.",
+    "dataInputs": [
+      "Transaction datasets with controlled item and transaction counts",
+      "Algorithm runtimes across the two sweeps"
+    ],
+    "built": [
+      "Implemented the benchmark for brute-force and Apriori methods.",
+      "Varied distinct items and transaction counts separately and compared four runtime series."
+    ],
+    "process": [
+      "Set benchmark dimensions",
+      "Generate transactions",
+      "Run both methods",
+      "Compare runtime curves"
+    ],
+    "tech": [
+      "Python",
+      "Apriori",
+      "Frequent Itemsets",
+      "Benchmarking"
+    ],
+    "results": [
+      "Produced four comparison curves covering two algorithms and two workload sweeps."
+    ],
+    "learned": "The number of items controls the candidate space. The number of transactions changes support-counting work.",
+    "limitations": "Original timing curves are unavailable on this site. Performance depends on support threshold and the transaction distribution.",
+    "links": []
+  },
+  {
+    "id": "linguaplay",
+    "title": "LinguaPlay — Full-stack Interactive Learning Platform",
+    "subtitle": "A full-stack language-learning application",
+    "featured": false,
+    "categories": [
+      "engineering"
+    ],
+    "role": "Product design and full-stack implementation",
+    "type": "UCLA CS144 · Full-stack course project",
+    "summary": "Built a language-learning web application connecting practice games, user accounts and score tracking, with a React frontend and an Express/MongoDB backend.",
+    "context": "A language-learning application needs to connect the practice experience with user identity and stored progress.",
+    "problem": "The game interface, authentication and score submission must work together so users can complete a session and see their results.",
+    "built": [
+      "Developed the React/Vite interface for vocabulary practice and game flows.",
+      "Implemented Express APIs and MongoDB persistence for application data.",
+      "Added JWT-based authentication and score submission to connect users with their results.",
+      "Integrated games and leaderboard views into a complete learning flow."
+    ],
+    "process": [
+      "Sign in",
+      "Choose a game",
+      "Practice",
+      "Submit score",
+      "View leaderboard"
+    ],
+    "tech": [
+      "React",
+      "Vite",
+      "JavaScript",
+      "Express",
+      "MongoDB",
+      "JWT"
+    ],
+    "results": [
+      "Delivered a full-stack application combining game interaction, authentication and score tracking."
+    ],
+    "learned": "Completing the user journey means connecting the game interface to identity, persistence and visible results.",
+    "links": [
+      {
+        "label": "View source code",
+        "url": "https://github.com/Wenjing1206/linguaplay"
+      }
+    ],
+    "analysisQuestion": "How should game interaction, authentication and score persistence connect across the full stack?",
+    "dataInputs": [
+      "User accounts",
+      "Vocabulary and game inputs",
+      "Submitted scores",
+      "Leaderboard records"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Map the user flow",
+        "body": "Connect authentication, game selection, play and results."
+      },
+      {
+        "title": "Define API boundaries",
+        "body": "Separate frontend interaction from authentication and score persistence."
+      },
+      {
+        "title": "Persist results",
+        "body": "Connect score submission with stored user and leaderboard data."
+      }
+    ],
+    "analysisOutcome": "Keep identity and score persistence explicit across the frontend and backend.",
+    "productOutcome": "A language-learning application with games and leaderboard functionality.",
+    "limitations": "An academic software project; no learning-retention or production-scale performance claim is made."
+  },
+  {
+    "id": "ntu-omnibus",
+    "title": "NTU Omnibus — Human-Centered Transportation Redesign",
+    "type": "NTU IN6240 · Human–Computer Interaction",
+    "period": "2026 · NTU coursework",
+    "categories": [
+      "product",
+      "research"
+    ],
+    "role": "Diagnosis and synthesis · Team project",
+    "summary": "Diagnosed how students recognize a destination, match it to a stop and route, and identify the correct boarding direction in the NTU campus shuttle experience.",
+    "context": "A student can know the building they want to reach while being unfamiliar with stop names, routes and boarding direction.",
+    "problem": "Find which parts of the destination-to-boarding process create uncertainty for riders.",
+    "dataInputs": [
+      "Heuristic evaluation by six evaluators",
+      "One cognitive walkthrough",
+      "Task-based field evaluation with six participants"
+    ],
+    "built": [
+      "Wrote the diagnostic sections on destination recognition, destination–stop–route matching, and boarding stop and direction.",
+      "Synthesized evidence across the evaluation methods to inform the team redesign."
+    ],
+    "process": [
+      "Name a destination",
+      "Match a stop and route",
+      "Choose the boarding direction"
+    ],
+    "tech": [
+      "Heuristic Evaluation",
+      "Cognitive Walkthrough",
+      "Task-based Field Evaluation",
+      "HCI"
+    ],
+    "results": [
+      "Identified three distinct breakdowns in the navigation flow and provided recommendations to the team redesign."
+    ],
+    "learned": "A route label is useful only after a rider has linked their destination to the correct stop and direction.",
+    "limitations": "The field evaluation was small and campus-specific. The case does not report a post-launch ridership or usability lift.",
+    "links": []
+  },
+  {
+    "id": "ai-image-memory",
+    "title": "Human Cognition & AI Research — Image Recognition Memory",
+    "subtitle": "Experimental research on image origin, labels, and recognition memory",
+    "featured": false,
+    "categories": [
+      "research",
+      "product"
+    ],
+    "role": "Experiment design and analysis · Individual coursework",
+    "type": "UCLA · Cognitive Science coursework",
+    "cover": "assets/images/experiment-results.png",
+    "summary": "A 2 × 2 within-subjects experiment testing whether AI-generated imagery and source labels shape immediate and delayed recognition.",
+    "context": "As synthetic images become common, product teams need to understand not only whether users can identify them, but how image origin and labeling affect memory and trust.",
+    "problem": "A compelling descriptive pattern can easily be overclaimed. The study needed separate variables, immediate and delayed outcomes, and disciplined interpretation of main and interaction effects.",
+    "built": [
+      "Operationalized image origin, labeling condition, and recognition accuracy.",
+      "Built a controlled set of AI-generated and real-image stimuli.",
+      "Used PsychoPy to run recognition tasks with 21 UCLA participants.",
+      "Separated robust findings from exploratory or non-significant effects."
+    ],
+    "process": [
+      "Define variables",
+      "Prepare stimuli",
+      "Run 2 × 2 study",
+      "Collect recognition data",
+      "Test effects",
+      "Bound the claim"
+    ],
+    "tech": [
+      "PsychoPy",
+      "Experimental Design",
+      "Repeated Measures",
+      "Statistical Testing",
+      "Data Visualization"
+    ],
+    "results": [
+      "The recorded study included 21 participants in a 2 × 2 within-subjects design.",
+      "Project materials report a delayed image-type effect (p = .002); label and interaction effects were not treated as equally robust claims."
+    ],
+    "learned": "Good AI product research includes knowing what not to claim. Evidence strength should shape both product decisions and public language.",
+    "links": [],
+    "analysisQuestion": "Do image origin and AI-source labels change immediate or delayed recognition memory?",
+    "dataInputs": [
+      "21 UCLA participants",
+      "AI-generated and real-image stimuli",
+      "Labeled and unlabeled conditions",
+      "Immediate and delayed recognition responses"
+    ],
+    "analysisProcess": [
+      {
+        "title": "Operationalize variables",
+        "body": "Defined image origin and label condition as within-subject factors, with recognition accuracy measured at immediate and delayed time points."
+      },
+      {
+        "title": "Prepare comparable stimuli",
+        "body": "Built controlled AI-generated and real-image sets and balanced presentation conditions to reduce ordering and exposure effects."
+      },
+      {
+        "title": "Collect behavioral data",
+        "body": "Used PsychoPy to record participant responses under the four 2 × 2 conditions."
+      },
+      {
+        "title": "Compare effects",
+        "body": "Calculated descriptive differences and tested image-type, label, and interaction effects separately for immediate and delayed recognition."
+      },
+      {
+        "title": "Bound the conclusion",
+        "body": "Distinguished the supported delayed image-type effect from weaker label and interaction patterns that require more evidence."
+      }
+    ],
+    "analysisOutcome": "Project materials report a delayed image-type effect at p = .002. The analysis supports a difference in delayed recognition, while avoiding a broader claim that labels or AI images always improve memory.",
+    "productOutcome": "A course study reporting recognition accuracy across the four conditions and two test timings.",
+    "limitations": "The sample was small and drawn from UCLA students. Stimulus style may partly explain memorability, so broader image categories and preregistered replication would strengthen the conclusion.",
+    "coverAlt": "Original course figure reporting results by image origin and label condition"
   },
   {
     "id": "classification-workflow",
     "title": "Reusable Classification Workflow Skill",
     "subtitle": "Turning a dataset into an inspectable ML experiment",
-    "featured": true,
-    "depth": "full",
-    "accent": "purple",
+    "featured": false,
     "categories": [
-      "AI Product",
-      "Data & Analytics"
-    ],
-    "tags": [
-      "Agent Skill",
-      "ML Workflow",
-      "Validation",
-      "Report Generation"
+      "ai",
+      "ml",
+      "engineering"
     ],
     "role": "Workflow specification and supporting implementation",
     "type": "Reusable agent workflow",
@@ -414,99 +876,14 @@ window.PROJECTS = [
     ]
   },
   {
-    "id": "linguaplay",
-    "title": "LinguaPlay",
-    "subtitle": "A full-stack language-learning application",
-    "featured": true,
-    "depth": "full",
-    "accent": "purple",
-    "categories": [
-      "UX & Engineering",
-      "AI Product"
-    ],
-    "tags": [
-      "Full-stack",
-      "React",
-      "Authentication",
-      "API"
-    ],
-    "role": "Product design and full-stack implementation",
-    "type": "Independent full-stack project",
-    "summary": "Built a language-learning web application connecting practice games, user accounts and score tracking, with a React frontend and an Express/MongoDB backend.",
-    "context": "A language-learning application needs to connect the practice experience with user identity and stored progress.",
-    "problem": "The game interface, authentication and score submission must work together so users can complete a session and see their results.",
-    "built": [
-      "Developed the React/Vite interface for vocabulary practice and game flows.",
-      "Implemented Express APIs and MongoDB persistence for application data.",
-      "Added JWT-based authentication and score submission to connect users with their results.",
-      "Integrated games and leaderboard views into a complete learning flow."
-    ],
-    "process": [
-      "Sign in",
-      "Choose a game",
-      "Practice",
-      "Submit score",
-      "View leaderboard"
-    ],
-    "tech": [
-      "React",
-      "Vite",
-      "JavaScript",
-      "Express",
-      "MongoDB",
-      "JWT"
-    ],
-    "results": [
-      "Delivered a full-stack application combining game interaction, authentication and score tracking."
-    ],
-    "learned": "Completing the user journey means connecting the game interface to identity, persistence and visible results.",
-    "links": [
-      {
-        "label": "View source code",
-        "url": "https://github.com/Wenjing1206/linguaplay"
-      }
-    ],
-    "analysisQuestion": "How should game interaction, authentication and score persistence connect across the full stack?",
-    "dataInputs": [
-      "User accounts",
-      "Vocabulary and game inputs",
-      "Submitted scores",
-      "Leaderboard records"
-    ],
-    "analysisProcess": [
-      {
-        "title": "Map the user flow",
-        "body": "Connect authentication, game selection, play and results."
-      },
-      {
-        "title": "Define API boundaries",
-        "body": "Separate frontend interaction from authentication and score persistence."
-      },
-      {
-        "title": "Persist results",
-        "body": "Connect score submission with stored user and leaderboard data."
-      }
-    ],
-    "analysisOutcome": "Keep identity and score persistence explicit across the frontend and backend.",
-    "productOutcome": "A language-learning application with games and leaderboard functionality.",
-    "limitations": "An academic software project; no learning-retention or production-scale performance claim is made."
-  },
-  {
     "id": "honkai-nlp",
     "title": "Honkai: Star Rail NLP Analysis",
     "subtitle": "Understanding fictional worlds through dialogue data",
     "featured": false,
-    "depth": "full",
-    "accent": "orange",
     "categories": [
-      "Data & Analytics",
-      "Research"
-    ],
-    "tags": [
-      "NLP",
-      "TF-IDF",
-      "Topic Modeling",
-      "Data Visualization"
+      "ml",
+      "analytics",
+      "research"
     ],
     "role": "Data analysis, modeling, and narrative interpretation",
     "type": "UCLA Digital Humanities / Data project",
@@ -576,103 +953,16 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "The executed notebook reached 0.744 accuracy, 0.694 macro F1, and 0.745 weighted F1. The gap between overall and macro performance showed that chapter imbalance remained an important interpretation limit.",
     "productOutcome": "Delivered a fully executed, reproducible narrative-analytics notebook and visual report that lets readers compare vocabulary, topics, and classification behavior across five fictional worlds.",
-    "limitations": "Dialogue volume and speaker distribution differ by chapter. The model identifies linguistic association, not authorial intent or causal narrative influence."
-  },
-  {
-    "id": "ai-image-memory",
-    "title": "AI-Generated Images & Memorability",
-    "subtitle": "Experimental research on image origin, labels, and recognition memory",
-    "featured": false,
-    "depth": "full",
-    "accent": "pink",
-    "categories": [
-      "Research",
-      "AI Product"
-    ],
-    "tags": [
-      "HCI",
-      "Experiment Design",
-      "Generative AI",
-      "ANOVA"
-    ],
-    "role": "Experimental design, analysis, and interpretation · Group research",
-    "type": "UCLA Cognitive Science research",
-    "cover": "assets/images/experiment-results.png",
-    "summary": "A 2 × 2 within-subjects experiment testing whether AI-generated imagery and source labels shape immediate and delayed recognition.",
-    "context": "As synthetic images become common, product teams need to understand not only whether users can identify them, but how image origin and labeling affect memory and trust.",
-    "problem": "A compelling descriptive pattern can easily be overclaimed. The study needed separate variables, immediate and delayed outcomes, and disciplined interpretation of main and interaction effects.",
-    "built": [
-      "Operationalized image origin, labeling condition, and recognition accuracy.",
-      "Built a controlled set of AI-generated and real-image stimuli.",
-      "Used PsychoPy to run recognition tasks with 21 UCLA participants.",
-      "Separated robust findings from exploratory or non-significant effects."
-    ],
-    "process": [
-      "Define variables",
-      "Prepare stimuli",
-      "Run 2 × 2 study",
-      "Collect recognition data",
-      "Test effects",
-      "Bound the claim"
-    ],
-    "tech": [
-      "PsychoPy",
-      "Experimental Design",
-      "Repeated Measures",
-      "Statistical Testing",
-      "Data Visualization"
-    ],
-    "results": [
-      "The recorded study included 21 participants in a 2 × 2 within-subjects design.",
-      "Project materials report a delayed image-type effect (p = .002); label and interaction effects were not treated as equally robust claims."
-    ],
-    "learned": "Good AI product research includes knowing what not to claim. Evidence strength should shape both product decisions and public language.",
-    "links": [],
-    "analysisQuestion": "Do image origin and AI-source labels change immediate or delayed recognition memory?",
-    "dataInputs": [
-      "21 UCLA participants",
-      "AI-generated and real-image stimuli",
-      "Labeled and unlabeled conditions",
-      "Immediate and delayed recognition responses"
-    ],
-    "analysisProcess": [
-      {
-        "title": "Operationalize variables",
-        "body": "Defined image origin and label condition as within-subject factors, with recognition accuracy measured at immediate and delayed time points."
-      },
-      {
-        "title": "Prepare comparable stimuli",
-        "body": "Built controlled AI-generated and real-image sets and balanced presentation conditions to reduce ordering and exposure effects."
-      },
-      {
-        "title": "Collect behavioral data",
-        "body": "Used PsychoPy to record participant responses under the four 2 × 2 conditions."
-      },
-      {
-        "title": "Compare effects",
-        "body": "Calculated descriptive differences and tested image-type, label, and interaction effects separately for immediate and delayed recognition."
-      },
-      {
-        "title": "Bound the conclusion",
-        "body": "Distinguished the supported delayed image-type effect from weaker label and interaction patterns that require more evidence."
-      }
-    ],
-    "analysisOutcome": "Project materials report a delayed image-type effect at p = .002. The analysis supports a difference in delayed recognition, while avoiding a broader claim that labels or AI images always improve memory.",
-    "productOutcome": "Produced an experimental research package and evidence-based design guidance for teams deciding when AI-origin labels or image-source cues should appear in visual experiences.",
-    "limitations": "The sample was small and drawn from UCLA students. Stimulus style may partly explain memorability, so broader image categories and preregistered replication would strengthen the conclusion."
+    "limitations": "Dialogue volume and speaker distribution differ by chapter. The model identifies linguistic association, not authorial intent or causal narrative influence.",
+    "coverAlt": "Original project figure comparing dialogue distribution across chapters"
   },
   {
     "id": "image-authenticity",
     "title": "Image Tampering & AI Recognition",
     "subtitle": "Product framing for visual-content authenticity",
     "categories": [
-      "AI Product",
-      "Research"
-    ],
-    "tags": [
-      "Computer Vision",
-      "Trust & Safety",
-      "AI Detection"
+      "product",
+      "research"
     ],
     "role": "Research and product exploration",
     "type": "Computer vision / AI product study",
@@ -733,13 +1023,8 @@ window.PROJECTS = [
     "title": "Chinese Dialect Computational Analysis",
     "subtitle": "Mapping Dalian dialect similarity with lexical distance",
     "categories": [
-      "Research",
-      "Data & Analytics"
-    ],
-    "tags": [
-      "Computational Linguistics",
-      "MDS",
-      "Clustering"
+      "research",
+      "analytics"
     ],
     "role": "Computational analysis and visualization",
     "type": "Linguistics research",
@@ -802,13 +1087,8 @@ window.PROJECTS = [
     "title": "Interpersonal Dynamics Research",
     "subtitle": "Measuring synchrony in cooperative and argumentative interaction",
     "categories": [
-      "Research",
-      "Data & Analytics"
-    ],
-    "tags": [
-      "Behavioral Data",
-      "Statistics",
-      "Human Interaction"
+      "research",
+      "analytics"
     ],
     "role": "Behavioral coding and statistical analysis",
     "type": "Cognitive Science research",
@@ -870,12 +1150,7 @@ window.PROJECTS = [
     "title": "Airline Booking UX Redesign",
     "subtitle": "Reducing friction in the trip-search journey",
     "categories": [
-      "UX & Engineering"
-    ],
-    "tags": [
-      "UX",
-      "Information Architecture",
-      "Responsive Design"
+      "product"
     ],
     "role": "UX research and interaction design",
     "type": "Product redesign",
@@ -938,14 +1213,8 @@ window.PROJECTS = [
     "title": "Deportation Data Storytelling",
     "subtitle": "Historical data, power, and public interpretation",
     "categories": [
-      "Data & Analytics",
-      "Research",
-      "UX & Engineering"
-    ],
-    "tags": [
-      "Data Storytelling",
-      "Tableau",
-      "Digital Humanities"
+      "analytics",
+      "research"
     ],
     "role": "Data Visualization Specialist and Web Manager · Team project",
     "type": "UCLA DH101",
@@ -1009,13 +1278,8 @@ window.PROJECTS = [
     "title": "Spotify / API Data Project",
     "subtitle": "From nested responses to usable music data",
     "categories": [
-      "Data & Analytics",
-      "UX & Engineering"
-    ],
-    "tags": [
-      "API",
-      "JSON",
-      "Data Processing"
+      "engineering",
+      "analytics"
     ],
     "role": "API integration and data processing",
     "type": "Mini project",
@@ -1077,12 +1341,7 @@ window.PROJECTS = [
     "title": "CS144 Full-stack / WebAssembly",
     "subtitle": "Performance-minded web systems",
     "categories": [
-      "UX & Engineering"
-    ],
-    "tags": [
-      "Full-stack",
-      "WebAssembly",
-      "Web APIs"
+      "engineering"
     ],
     "role": "Full-stack engineering",
     "type": "Course engineering project",
@@ -1141,84 +1400,12 @@ window.PROJECTS = [
     "featured": false
   },
   {
-    "id": "kze-marketing",
-    "title": "Creator Performance & Partnership Analytics",
-    "subtitle": "Comparing creators beyond follower count",
-    "categories": [
-      "Data & Analytics"
-    ],
-    "tags": [
-      "Creator Analytics",
-      "Segmentation",
-      "Scoring",
-      "Funnel Analysis"
-    ],
-    "role": "Data Analyst Intern",
-    "type": "KZE Group",
-    "summary": "Analyzed TikTok creator reach, engagement and posting activity across follower segments, and built a weighted prioritization framework to support partnership outreach.",
-    "context": "Creator decisions combined inconsistent audience, content, and campaign metrics.",
-    "problem": "The team needed comparable features and a decision framework rather than a spreadsheet of raw counts.",
-    "built": [
-      "Compared video reach, engagement rates and posting activity across follower segments to identify potential partnership candidates.",
-      "Developed a weighted scoring framework combining content performance and partnership accessibility.",
-      "Structured partnership analysis around outreach, response, qualification and collaboration stages to locate potential conversion bottlenecks."
-    ],
-    "process": [
-      "Clean",
-      "Define metrics",
-      "Segment",
-      "Compare",
-      "Recommend"
-    ],
-    "tech": [
-      "Creator Analytics",
-      "Segmentation",
-      "Weighted Scoring",
-      "Funnel Analysis"
-    ],
-    "results": [
-      "Produced a creator-prioritization framework to support outreach decisions.",
-      "Connected creator performance measures with partnership accessibility and funnel stages."
-    ],
-    "learned": "A strong creator profile is only one input to a partnership decision; reachability and progression through outreach also matter.",
-    "links": [],
-    "analysisQuestion": "Which creator and engagement patterns best support influencer selection and campaign allocation?",
-    "dataInputs": [
-      "Creator profiles and follower segments",
-      "Video reach, engagement and posting activity",
-      "Partnership accessibility and outreach-stage information"
-    ],
-    "analysisProcess": [
-      {
-        "title": "Compare performance",
-        "body": "Examine reach, engagement and activity within follower segments."
-      },
-      {
-        "title": "Prioritize candidates",
-        "body": "Combine performance and accessibility criteria in an explicit weighted framework."
-      },
-      {
-        "title": "Examine the partnership journey",
-        "body": "Use outreach, response, qualification and collaboration stages to frame where candidates stop progressing."
-      }
-    ],
-    "analysisOutcome": "Use comparable creator metrics and accessibility criteria to decide whom to contact first.",
-    "productOutcome": "A structured approach to creator selection and partnership analysis.",
-    "limitations": "No ROI lift, creator count or conversion improvement is claimed without supporting records. Funnel interpretation depends on the completeness of outreach history.",
-    "featured": false
-  },
-  {
     "id": "soul-mate-bridal",
     "title": "Soul Mate Bridal UX & Web Growth",
     "subtitle": "A clearer path from discovery to enquiry",
     "categories": [
-      "UX & Engineering",
-      "Data & Analytics"
-    ],
-    "tags": [
-      "UX",
-      "SEO",
-      "Conversion"
+      "product",
+      "analytics"
     ],
     "role": "Marketing & Web Design Intern",
     "type": "Astral Culture Media",
@@ -1243,7 +1430,7 @@ window.PROJECTS = [
       "Web Design"
     ],
     "results": [
-      "Internship records report a 15% lead-conversion increase and 25% organic-search growth."
+      "Delivered a redesigned enquiry flow and landing-page updates to support lead generation and organic discovery."
     ],
     "learned": "Growth work is strongest when acquisition, interface, and measurement share the same journey model.",
     "links": [],
@@ -1272,9 +1459,10 @@ window.PROJECTS = [
         "body": "Supported landing-page, SEO, and contact-flow changes and monitored conversion-related outcomes."
       }
     ],
-    "analysisOutcome": "Internship records report 15% higher lead conversion and 25% organic-search growth following the combined optimization work.",
-    "productOutcome": "Delivered an integrated growth improvement across landing-page structure, contact flow, CTA hierarchy, and SEO content, with the recorded program outcomes shown separately from any single design change.",
+    "analysisOutcome": "Use the journey from acquisition to form submission to decide where contact and landing-page changes could reduce friction.",
+    "productOutcome": "Combined contact-flow, landing-page, and SEO improvements as part of the same website update.",
     "limitations": "The recorded outcomes reflect a combined program of UX, content, and SEO changes, so they should not be attributed to one interface change alone.",
-    "featured": false
+    "featured": false,
+    "period": "Oct 2024 – Jan 2025"
   }
 ];
