@@ -3,7 +3,7 @@
 window.PROJECTS = [
   {
     "id": "enterprise-ai-auditing",
-    "title": "AI-Assisted Report Pre-review",
+    "title": "Enterprise AI Agent & Intelligent Auditing System",
     "subtitle": "Structuring report pre-review with agents, retrieval and logic checks",
     "featured": true,
     "categories": [
@@ -11,7 +11,7 @@ window.PROJECTS = [
     ],
     "role": "AI Agent Development & Data Governance Intern",
     "type": "PetroChina Planning & Engineering Institute",
-    "summary": "Configured a three-stage review workflow that extracts report elements, checks them against retrieved standards, and drafts comments for human review.",
+    "summary": "Configured a three-stage report pre-review workflow during my PetroChina internship: identify report elements, check logic, and generate review suggestions grounded in a domain knowledge base.",
     "context": "Enterprise reports must be reviewed against regulations, industry standards, historical reports, and internal business logic. Manual review is repetitive, slow, and difficult to keep consistent.",
     "problem": "A pure LLM solution would be difficult to audit and prone to unsupported conclusions. The product needed a visible evidence chain, task decomposition, and clear escalation to expert reviewers.",
     "built": [
@@ -65,27 +65,23 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "Inspect the stage that introduced the error before changing prompts or retrieval configuration.",
     "productOutcome": "A report pre-review workflow designed to support reviewers with structured elements, checks and draft suggestions.",
-    "limitations": "The implementation export, source reports and evaluation logs are private. Aggregate accuracy, time savings and deployment reach are unavailable for public verification.",
+    "limitations": "The implementation ran in an enterprise AI platform. Internal workflow exports, reports, and aggregate evaluation logs are private.",
     "period": "Sep 2025 – Jun 2026",
-    "keyContribution": "Configured node inputs and outputs, connected knowledge sources, and inspected traces to locate the first failing stage.",
+    "keyContribution": "Configured a three-stage, retrieval-grounded report pre-review workflow.",
     "objective": "Give reviewers draft checks and comments with enough intermediate evidence to trace a finding back to the report or knowledge source.",
     "architectureLabel": "Conceptual workflow based on the configured pre-review stages",
-    "challenge": "An incorrect draft can originate in a missing field, an irrelevant source passage or an unsupported conclusion. I checked upstream outputs to determine which stage required changes.",
+    "challenge": "When a draft comment looked wrong, I inspected the upstream output before editing prompts. A missing report element, a weak retrieval result, and an unsupported conclusion called for different fixes.",
     "example": {
       "language": "Text",
       "title": "Bad-case review checklist",
-      "note": "Portfolio reconstruction of the checks used in node-level debugging. Internal prompts and traces are private.",
+      "note": "Illustrative checklist. The internal inputs, outputs and prompts are private.",
       "code": "INPUT       Report section and check under review\nEXTRACTION  Is the required field present and correctly mapped?\nRETRIEVAL   Does the source passage support the check?\nGENERATION  Does the draft cite the relevant evidence?\nREVIEW      Flag the first stage that introduced the issue."
     },
-    "nextSteps": "Create reviewer-labeled regression cases for missing fields, weak retrieval and unsupported draft comments.",
-    "evidence": {
-      "label": "Internship case summary",
-      "summary": "Three configured stages with inspectable outputs. The case includes the diagnostic checklist I used to reason about failures."
-    }
+    "nextSteps": "Create reviewer-labeled regression cases for missing fields, weak retrieval and unsupported draft comments."
   },
   {
     "id": "shopping-copilot",
-    "title": "Shopping Copilot: Conversation State & Recommendations",
+    "title": "Conversational Shopping Copilot & Recommendation Optimization",
     "subtitle": "Keeping shopping preferences consistent across a changing conversation",
     "featured": true,
     "categories": [
@@ -94,7 +90,7 @@ window.PROJECTS = [
     ],
     "role": "Conversation State Management / AI Agent Design · Team project",
     "type": "TikTok TechJam 2026",
-    "summary": "Owned conversation state in a team shopping copilot. Tracked user constraints across turns and passed updated preferences to clarification and reranking.",
+    "summary": "Owned conversation state management in a team shopping copilot: structured user constraints, resolved preference changes, and supplied state signals for clarification and reranking.",
     "context": "E-commerce search breaks when a user is vague, changes priorities, or rejects a previous preference. The challenge required an agent to find a hidden target product within ten turns across Buying, Browsing, Intent Override, and Boundary scenarios.",
     "problem": "The system needed to preserve useful context without letting stale constraints poison later recommendations. It also had to expose evaluator-valid output and remain useful when semantic resolution was unavailable.",
     "built": [
@@ -155,48 +151,23 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "When a user changes a requirement, update the affected state before retrieval. When the request remains ambiguous, clarify the missing constraint.",
     "productOutcome": "Contributed the Conversation State Management module and its interfaces to the team shopping copilot.",
-    "limitations": "The team repository, individual test traces and score outputs are private. Hybrid retrieval, ranking and end-to-end evaluation were shared work. The challenge used a fixed catalog.",
+    "limitations": "The team repository is private. Retrieval, ranking and end-to-end evaluation were shared team work. The benchmark used a fixed catalog and challenge scenarios.",
     "period": "Aug 2026",
-    "keyContribution": "Implemented state updates for preference overrides and tested ambiguous or conflicting replies.",
+    "keyContribution": "Owned conversation state and preference overrides for a team recommendation system.",
     "objective": "Carry valid preferences across a multi-turn conversation, apply explicit updates, and decide when missing information warrants clarification.",
     "architectureLabel": "Team pipeline with the conversation-state handoff",
-    "challenge": "A phrase such as “up to 30 mm” can be interpreted as a budget. Check the parsed constraint type before diagnosing retrieval or rank changes.",
+    "challenge": "A size phrase such as “up to 30mm” was misread as a price ceiling in one audit. Checking the parsed field first showed where the error entered before it affected the candidate ranking.",
     "example": {
       "language": "JSON",
       "title": "Preference override in a two-turn conversation",
-      "note": "Illustrative input and state transition based on the documented override behavior. The values are examples for the portfolio.",
+      "note": "Illustrative state snapshot written for this case study.",
       "code": "{\n  \"before\": { \"budget_max\": 120, \"brand\": \"Brand A\" },\n  \"message\": \"Actually, up to 150 is fine.\",\n  \"after\":  { \"budget_max\": 150, \"brand\": \"Brand A\" }\n}"
     },
-    "nextSteps": "Add per-scenario regression thresholds and compare rank movement before and after individual state-policy changes.",
-    "evidence": {
-      "label": "Team project · individual scope documented",
-      "summary": "I owned the conversation state and its handoff to ranking. The case shows a state transition, regression scenarios, and what the team metrics measure."
-    },
-    "evidenceTable": {
-      "caption": "Expected behavior in conversation-state regression scenarios",
-      "headings": [
-        "Input pattern",
-        "Expected behavior"
-      ],
-      "rows": [
-        [
-          "Explicit preference update",
-          "Replace the affected constraint before ranking and preserve unrelated constraints."
-        ],
-        [
-          "Short reply to a clarification",
-          "Interpret the reply in the current question’s context and preserve established constraints."
-        ],
-        [
-          "Ambiguous attribute or unit",
-          "Clarify the attribute before applying the value as a hard filter."
-        ]
-      ]
-    }
+    "nextSteps": "Add per-scenario regression thresholds and compare rank movement before and after individual state-policy changes."
   },
   {
     "id": "carbon-data-platform",
-    "title": "Carbon Registry Reconciliation & Analytics",
+    "title": "Carbon Data Governance & Analytics Platform",
     "subtitle": "From fragmented registry exports to 378 governed project records",
     "featured": true,
     "categories": [
@@ -205,7 +176,7 @@ window.PROJECTS = [
     ],
     "role": "Data Governance Intern",
     "type": "PetroChina Planning & Engineering Institute",
-    "summary": "Consolidated project information from Verra VCS, Gold Standard and CCER into 378 governed project records for lookup and analysis.",
+    "summary": "Consolidated carbon-project data from CCER, VCS and Gold Standard using registry downloads, manual collection and project documents; cleaned the material into 378 project records.",
     "context": "Carbon-project records combine inconsistent fields, market data, methodologies, policies, and unstructured project descriptions across multiple mechanisms.",
     "problem": "Without common definitions and quality checks, analytics cannot reliably support project monitoring or market decisions.",
     "built": [
@@ -235,22 +206,22 @@ window.PROJECTS = [
     "learned": "Cross-source governance starts with agreeing what a field means. Matching column names alone does not make records comparable.",
     "links": [
       {
-        "label": "Verra VCS project search",
+        "label": "Verra VCS Registry",
         "url": "https://registry.verra.org/app/search/VCS/All%20Projects"
       },
       {
-        "label": "Gold Standard China issuance listings",
-        "url": "https://registry.goldstandard.org/credit-blocks/issuances?q=&page=1&countries=CN"
+        "label": "Gold Standard Registry",
+        "url": "https://www.goldstandard.org/impact-registry"
       },
       {
-        "label": "CCER project disclosure",
+        "label": "CCER Registry",
         "url": "https://ccer.cets.org.cn/projectPublicity/projectPublicityList"
       }
     ],
     "analysisQuestion": "How can fragmented carbon-project records become consistent enough for lifecycle monitoring and market analysis?",
     "dataInputs": [
       "CCER project information",
-      "Verra VCS project listings filtered to China and Active",
+      "VCS registry records filtered to China",
       "Gold Standard issuance records filtered to China",
       "Downloaded spreadsheets, project pages and PDF reports"
     ],
@@ -274,73 +245,30 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "Resolve source inconsistencies before aggregating projects or interpreting regional and mechanism-level patterns.",
     "productOutcome": "A consolidated project-data foundation supporting carbon-project lookup and analysis.",
-    "limitations": "The consolidated table and BI assets are private. The public links show the input systems. The 378 project records describe the project-level deliverable. Upstream totals and row-level exceptions are private.",
+    "limitations": "The governed table and internal BI assets are private. Collection combined exports and manual extraction; the public evidence consists of the method and final record count.",
     "period": "Sep 2025 – Jun 2026",
-    "keyContribution": "Aligned fields, checked inconsistent values against source documents, and prepared the consolidated records for downstream analysis.",
+    "keyContribution": "Standardized, checked, and consolidated 378 project records across three registry sources.",
     "objective": "Create a consistent project table that supports comparison across registries and makes it possible to trace discrepancies back to the source.",
     "architectureLabel": "Registry-to-analysis data flow",
     "challenge": "The Gold Standard starting view is an issuance list. Treating every issuance as a project can inflate project counts. Review registry grain and project identity before joining or aggregating records.",
     "example": {
       "language": "Text",
       "title": "Example mapping fields",
-      "note": "Illustrative mapping for this public portfolio. Internal records and schema are private.",
+      "note": "Illustrative field map. Labels and values are examples for the public case study.",
       "code": "registry_name    VCS | Gold Standard | CCER\nproject_id       Identifier in the source registry\nmethodology      Source methodology reference\nsource_ref       Registry listing or supporting document"
     },
-    "nextSteps": "Document source snapshots, unique-key rules, and row-level validation outcomes for repeatable refreshes.",
-    "evidence": {
-      "label": "Public source registries · private output",
-      "summary": "The source table identifies each registry’s starting record grain. The reconciled local workbook contains 378 project rows.",
-      "links": [
-        {
-          "label": "Verra VCS project search",
-          "url": "https://registry.verra.org/app/search/VCS/All%20Projects"
-        },
-        {
-          "label": "Gold Standard China issuance listings",
-          "url": "https://registry.goldstandard.org/credit-blocks/issuances?q=&page=1&countries=CN"
-        },
-        {
-          "label": "CCER project disclosure",
-          "url": "https://ccer.cets.org.cn/projectPublicity/projectPublicityList"
-        }
-      ]
-    },
-    "evidenceTable": {
-      "caption": "Source-to-project reconciliation",
-      "headings": [
-        "Source",
-        "Starting view",
-        "Grain check"
-      ],
-      "rows": [
-        [
-          "Verra VCS",
-          "Project listings filtered to China and Active",
-          "Use project identity and check methodology in the listing or details."
-        ],
-        [
-          "Gold Standard",
-          "Credit issuances filtered to China",
-          "An issuance and a project have different grains. Check project identity before aggregating."
-        ],
-        [
-          "CCER",
-          "Public project listings and supporting documents",
-          "Check missing and inconsistent values against the source documents."
-        ]
-      ]
-    }
+    "nextSteps": "Document source snapshots, unique-key rules, and row-level validation outcomes for repeatable refreshes."
   },
   {
     "id": "kze-marketing",
-    "title": "Creator Analytics & Partnership Prioritization",
+    "title": "Creator Analytics & Partnership Decision Framework",
     "subtitle": "Comparing creators beyond follower count",
     "categories": [
       "analytics"
     ],
     "role": "Data Analyst Intern",
     "type": "KZE Group LLC",
-    "summary": "Compared creator reach, engagement, and posting activity within follower segments. Paired weighted prioritization with a four-stage partnership funnel.",
+    "summary": "Analyzed TikTok creator reach, engagement and posting activity across follower segments, and built a weighted prioritization framework to support partnership outreach.",
     "context": "Creator decisions combined inconsistent audience, content, and campaign metrics.",
     "problem": "The team needed comparable features and a decision framework rather than a spreadsheet of raw counts.",
     "built": [
@@ -387,57 +315,33 @@ window.PROJECTS = [
       }
     ],
     "analysisOutcome": "Use comparable creator metrics and accessibility criteria to decide whom to contact first.",
-    "productOutcome": "A framework for ordering outreach and identifying where to look for funnel bottlenecks.",
-    "limitations": "Creator-level records, weights, counts and original analysis files are private. Public material documents the measurement logic. Campaign lift was not established.",
+    "productOutcome": "A structured approach to creator selection and partnership analysis.",
+    "limitations": "Creator-level data, scoring weights, and conversion totals are private. Funnel interpretation depends on complete outreach history.",
     "featured": true,
     "period": "Jun 2024 – Sep 2024",
-    "keyContribution": "Built the prioritization framework and analyzed progression from outreach through response, qualification, and collaboration.",
+    "keyContribution": "Developed a weighted creator score and mapped the four-stage partnership funnel.",
     "objective": "Compare creators within meaningful follower groups and give the outreach team a consistent way to prioritize prospects.",
     "architectureLabel": "Conceptual scoring and partnership funnel",
     "challenge": "Raw follower count favors larger accounts. Comparing within follower segments and including partnership accessibility made the outreach order better reflect the decision the team needed to make.",
     "example": {
       "language": "Text",
       "title": "Partnership funnel stages",
-      "note": "Method summary. Each conversion uses the eligible creator cohort at the preceding stage as its denominator.",
+      "note": "Stage sequence only. Internship conversion counts and weights are private.",
       "code": "Outreach → Response → Qualification → Collaboration\nStage conversion = progressed creators / eligible creators at prior stage"
     },
-    "nextSteps": "Record stage timestamps and review score calibration once enough prospects have reached collaboration.",
-    "evidence": {
-      "label": "Internship methodology",
-      "summary": "Review the scoring inputs, funnel denominators and decisions supported. Creator-level observations, weights and conversion counts are private."
-    },
-    "evidenceTable": {
-      "caption": "Decisions supported by creator analysis",
-      "headings": [
-        "Decision",
-        "Comparison",
-        "Limit"
-      ],
-      "rows": [
-        [
-          "Who should be contacted first?",
-          "Compare reach, engagement and activity within follower segments, then consider accessibility.",
-          "Weights depend on campaign priorities."
-        ],
-        [
-          "Which outreach stage needs investigation?",
-          "Compare eligible creators progressing beyond each stage.",
-          "Rates require complete stage histories and a common cohort window."
-        ]
-      ]
-    }
+    "nextSteps": "Record stage timestamps and review score calibration once enough prospects have reached collaboration."
   },
   {
     "id": "tabular-classification",
-    "title": "Tabular Classification: Logistic Regression vs. Random Forest",
+    "title": "Applied Machine Learning & Predictive Analytics",
     "subtitle": "When a higher ranking score does not mean a better fixed-threshold decision",
-    "featured": true,
+    "featured": false,
     "categories": [
       "ml"
     ],
     "role": "Experiment implementation and analysis · Individual coursework",
     "type": "NTU IN6227 · Data Mining",
-    "summary": "Compared two classifiers on 13,333 held-out rows and checked whether the model selected by Average Precision also performed best at a fixed operating threshold.",
+    "summary": "Compared Logistic Regression and Random Forest on 31,109 labelled training rows and 13,333 held-out test rows, using fold-specific preprocessing and Average Precision for model selection.",
     "context": "The binary classification dataset contains approximately 24% positive labels, making accuracy alone an incomplete measure of model usefulness.",
     "problem": "Model selection had to preserve the held-out test set and distinguish ranking performance from precision and recall at a fixed threshold.",
     "built": [
@@ -474,7 +378,7 @@ window.PROJECTS = [
       },
       {
         "title": "Select consistently",
-        "body": "Use the same three stratified folds for six Logistic Regression configurations and eight Random Forest configurations. Refit the winner in each family after 42 total CV fits."
+        "body": "Use the same stratified folds and validation Average Precision for both model families."
       },
       {
         "title": "Compare ranking and decisions",
@@ -492,49 +396,35 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "The CV criterion selected Random Forest, but the test results support a cautious comparison rather than declaring it uniformly better.",
     "productOutcome": "A reproducible experiment with saved selection records, metrics, plots and independent metric verification.",
-    "limitations": "The public repository includes code, test aggregates and verification output. Model reruns require the course-supplied data. The dataset lacks feature timing and entity identifiers, so deployment validity and entity-level leakage remain untested.",
+    "limitations": "Feature timing and entity identifiers are unavailable. The results do not establish deployment validity; the bootstrap interval is conditional on the fitted models.",
     "learned": "Choosing the primary metric determines what 'best model' means. Ranking quality and fixed-threshold decisions can favor different models.",
     "links": [
       {
-        "label": "Experiment source",
-        "url": "https://github.com/Wenjing1206/in6227-assignment-1/blob/variant1/src/run_experiment.py"
-      },
-      {
-        "label": "Metric verifier source",
-        "url": "https://github.com/Wenjing1206/in6227-assignment-1/blob/variant1/src/verify_results.py"
-      },
-      {
-        "label": "Data integrity tests",
-        "url": "https://github.com/Wenjing1206/in6227-assignment-1/blob/variant1/tests/test_data_integrity.py"
+        "label": "Code, results and methodology",
+        "url": "https://github.com/Wenjing1206/in6227-assignment-1"
       }
     ],
     "period": "2026 · NTU coursework",
-    "keyContribution": "Built leakage-controlled CV pipelines and independently recomputed metrics using saved predictions.",
+    "keyContribution": "Reproduced held-out metrics from saved predictions and quantified uncertainty in the AP difference.",
     "objective": "Compare ranking quality and fixed-threshold decisions with the same splits, metric definitions and held-out evaluation.",
     "architectureLabel": "Model selection and held-out evaluation flow",
     "challenge": "A higher ranking metric can coexist with lower F1 at a chosen decision threshold. Evaluate intended use before interpreting a small AP difference.",
     "evidenceTable": {
-      "caption": "Held-out results and fixed-threshold decisions",
+      "caption": "Held-out results for both fitted models",
       "headings": [
         "Model",
-        "Average Precision",
-        "ROC-AUC",
-        "Recall at 0.5",
+        "Average precision",
         "F1 at 0.5"
       ],
       "rows": [
         [
           "Logistic Regression",
           "0.7023",
-          "0.8887",
-          "0.5717",
           "0.6295"
         ],
         [
           "Random Forest",
           "0.7084",
-          "0.8900",
-          "0.5634",
           "0.6242"
         ]
       ]
@@ -545,29 +435,11 @@ window.PROJECTS = [
       "title": "Shared cross-validation splits and model selection",
       "note": "Excerpt from the public experiment source. Both model families use the same fold list.",
       "code": "cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=SEED)\nfolds = list(cv.split(x_train, y_train))\n\nsearch = GridSearchCV(\n    make_pipeline(numeric, categorical, name), grid,\n    scoring={\"ap\": \"average_precision\", \"roc_auc\": \"roc_auc\", \"f1\": \"f1\"},\n    refit=\"ap\", cv=folds, n_jobs=args.jobs, error_score=\"raise\", return_train_score=True,\n)"
-    },
-    "evidence": {
-      "label": "Public code and results",
-      "summary": "See how the model was selected before test access and how metrics were independently verified on all 13,333 held-out rows.",
-      "links": [
-        {
-          "label": "Experiment repository",
-          "url": "https://github.com/Wenjing1206/in6227-assignment-1"
-        },
-        {
-          "label": "Pre-test selection record",
-          "url": "https://github.com/Wenjing1206/in6227-assignment-1/blob/variant1/results/selection_before_test.json"
-        },
-        {
-          "label": "Independent metric verification",
-          "url": "https://github.com/Wenjing1206/in6227-assignment-1/blob/variant1/results/verification.json"
-        }
-      ]
     }
   },
   {
     "id": "breast-tumor-classification",
-    "title": "Neural Network Regularization on a Diagnostic Benchmark",
+    "title": "Breast Tumor Classification & Neural Network Optimization",
     "type": "NTU IN6242 · Deep Learning Foundations",
     "period": "Oct 2026",
     "categories": [
@@ -575,20 +447,20 @@ window.PROJECTS = [
       "research"
     ],
     "role": "Model implementation and experimental comparison · Coursework",
-    "summary": "Compared eight PyTorch configurations by validation loss, then evaluated the selected configuration on 114 held-out samples.",
-    "keyContribution": "Controlled initialization and preprocessing, restored the validation-best checkpoint, and saved the selection before testing.",
+    "summary": "Compared a PyTorch binary-classification baseline with L2 regularization, Dropout, and Early Stopping on 569 samples with 30 diagnostic features.",
+    "keyContribution": "Built a leakage-aware experiment to compare regularization and generalization.",
     "context": "The Wisconsin Diagnostic Breast Cancer dataset is a small tabular classification dataset. A network can improve on the training set while losing performance on held-out samples.",
-    "problem": "In a deliberately small model-training set, falling training loss can coincide with rising validation loss. Compare interventions without tuning on the test set.",
-    "objective": "Compare all combinations of L2, Dropout and Early Stopping. Select the configuration by validation BCE and estimate test performance once.",
+    "problem": "Separate improvements in generalization from effects caused by preprocessing or a favorable split.",
+    "objective": "Compare baseline, L2, Dropout, and Early Stopping with consistent data partitions and evaluation rules.",
     "dataInputs": [
-      "569 samples and 30 diagnostic features",
-      "341 training, 114 validation, and 114 test samples in fixed stratified partitions",
-      "Standardization fitted on the 341 training samples. Of those, 60 were used for weight updates."
+      "569 samples",
+      "30 diagnostic features",
+      "Binary benign and malignant labels"
     ],
     "built": [
-      "Implemented a 30–256–256–1 PyTorch network using Adam and BCEWithLogitsLoss.",
-      "Standardized using the training partition, then trained on 60 of those samples to make overfitting visible.",
-      "Compared eight configurations and saved the selection record before test evaluation."
+      "Implemented a multilayer binary classifier in PyTorch using ReLU, binary cross-entropy and Adam.",
+      "Applied stratified splitting and fit the feature scaler on the training partition.",
+      "Designed controlled comparisons for L2 regularization, Dropout, and Early Stopping."
     ],
     "process": [
       "Stratified splits",
@@ -606,100 +478,31 @@ window.PROJECTS = [
     ],
     "analysisProcess": [
       {
-        "title": "Preprocess without leakage",
-        "body": "Split before computing training means and standard deviations. Apply those training parameters to all partitions."
+        "title": "Prevent preprocessing leakage",
+        "body": "Split the data before fitting the standardization transform and carry the training-derived transform to the held-out partitions."
       },
       {
-        "title": "Control the comparison",
-        "body": "Reset seed 42 for each run. Use a 300-epoch maximum, L2 weight decay of 0.01, Dropout of 0.5, and early-stopping patience of 20 where applicable."
+        "title": "Change one regularization strategy at a time",
+        "body": "Train a common baseline and compare it with L2, Dropout, and validation-based Early Stopping."
       },
       {
-        "title": "Restore and evaluate",
-        "body": "L2 plus Early Stopping returned epoch 215 after stopping at epoch 235. Select by the returned model’s validation BCE, then evaluate the chosen configuration once on the test set."
+        "title": "Examine generalization",
+        "body": "Compare training and validation loss behavior alongside held-out classification performance to identify overfitting."
       }
     ],
-    "challenge": "The baseline validation loss reached its minimum at epoch 29, then rose through epoch 300 while training loss kept falling.",
+    "challenge": "A small dataset makes results sensitive to split composition. Stratification helps preserve the class balance, and controlled variants make the source of a change easier to interpret.",
     "results": [
-      "L2 plus Early Stopping was selected by validation BCE (0.089976). L2 plus Dropout was close at 0.090379.",
-      "The selected configuration classified 108 of 114 held-out samples correctly (94.74%).",
-      "With actual classes in rows and predicted classes in columns, ordered malignant then benign, the confusion matrix was [[41, 1], [5, 67]]. One malignant sample was predicted benign."
+      "Completed the baseline and three regularization comparisons on the same diagnostic dataset."
     ],
-    "productOutcome": "A controlled coursework comparison with a pre-test selection record and a held-out confusion matrix.",
-    "limitations": "The benchmark used one fixed split and seed. The near-tie between the two best validation losses does not establish a stable ordering. This study did not evaluate clinical use.",
-    "nextSteps": "Repeat the same comparisons on multiple splits and seeds before drawing stronger conclusions.",
-    "links": [
-      {
-        "label": "Reproduction notes",
-        "url": "assets/evidence/regularization/README.md"
-      },
-      {
-        "label": "Wisconsin Diagnostic Breast Cancer dataset",
-        "url": "https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic"
-      }
-    ],
-    "evidence": {
-      "label": "Coursework code and aggregate results",
-      "summary": "Inspect the archived aggregate run results and a standalone version of the PyTorch selection procedure.",
-      "links": [
-        {
-          "label": "Run summary (JSON)",
-          "url": "assets/evidence/regularization/run-summary.json"
-        },
-        {
-          "label": "Run the selection procedure (Python)",
-          "url": "assets/evidence/regularization/part_c_selection.py"
-        }
-      ]
-    },
-    "evidenceTable": {
-      "caption": "Validation BCE for the model returned by each configuration",
-      "headings": [
-        "Configuration",
-        "Returned epoch",
-        "Validation BCE"
-      ],
-      "rows": [
-        [
-          "Baseline",
-          "300",
-          "0.174860"
-        ],
-        [
-          "Early Stopping",
-          "29",
-          "0.108055"
-        ],
-        [
-          "Dropout",
-          "300",
-          "0.164828"
-        ],
-        [
-          "Dropout + Early Stopping",
-          "37",
-          "0.110926"
-        ],
-        [
-          "L2",
-          "300",
-          "0.091071"
-        ],
-        [
-          "L2 + Early Stopping",
-          "215",
-          "0.089976"
-        ],
-        [
-          "L2 + Dropout",
-          "300",
-          "0.090379"
-        ],
-        [
-          "L2 + Dropout + Early Stopping",
-          "164",
-          "0.091452"
-        ]
-      ]
+    "productOutcome": "An academic comparison of regularization strategies with a reproducible evaluation design.",
+    "limitations": "Exact scores and training curves are not included in the public materials. The benchmark study does not evaluate clinical use.",
+    "nextSteps": "Publish experiment logs and compare performance across multiple seeds when the original materials are available.",
+    "links": [],
+    "example": {
+      "language": "Text",
+      "title": "Regularization experiment design",
+      "note": "Conceptual experiment matrix based on the four coursework conditions.",
+      "code": "Baseline        Shared model and fixed training budget\nL2              Add a weight penalty\nDropout         Apply dropout during training\nEarly Stopping  Monitor validation loss for stopping"
     }
   },
   {
@@ -884,7 +687,7 @@ window.PROJECTS = [
   },
   {
     "id": "ntu-omnibus",
-    "title": "NTU Omnibus: Shuttle Boarding UX Diagnosis",
+    "title": "NTU Omnibus — Human-Centered Transportation Redesign",
     "type": "NTU IN6240 · Human–Computer Interaction",
     "period": "2026 · NTU coursework",
     "categories": [
@@ -892,13 +695,13 @@ window.PROJECTS = [
       "research"
     ],
     "role": "Diagnosis and synthesis · Team project",
-    "summary": "Wrote three diagnosis sections for an NTU team redesign. Traced observed problems from destination recognition to boarding stop and direction.",
+    "summary": "Diagnosed how students recognize a destination, match it to a stop and route, and identify the correct boarding direction in the NTU campus shuttle experience.",
     "context": "A student can know the building they want to reach while being unfamiliar with stop names, routes and boarding direction.",
     "problem": "Find which parts of the destination-to-boarding process create uncertainty for riders.",
     "dataInputs": [
-      "Heuristic evaluation",
+      "Heuristic evaluation by six evaluators",
       "One cognitive walkthrough",
-      "Task-based field study conducted by six team members"
+      "Task-based field evaluation with six participants"
     ],
     "built": [
       "Wrote the diagnostic sections on destination recognition, destination–stop–route matching, and boarding stop and direction.",
@@ -919,38 +722,8 @@ window.PROJECTS = [
       "Identified three distinct breakdowns in the navigation flow and provided recommendations to the team redesign."
     ],
     "learned": "A route label is useful only after a rider has linked their destination to the correct stop and direction.",
-    "limitations": "The small internal field study was campus-specific. These redesign proposals have no reported post-launch outcomes.",
-    "links": [],
-    "keyContribution": "Authored the destination recognition, destination–stop–route matching, and boarding direction diagnoses.",
-    "evidence": {
-      "label": "Coursework report · individual scope documented",
-      "summary": "The table connects observed behavior, the team’s proposal, and a testable acceptance criterion derived for a follow-up study."
-    },
-    "evidenceTable": {
-      "caption": "Observed friction and proposed acceptance criteria",
-      "headings": [
-        "Observed behavior",
-        "Team proposal",
-        "Follow-up acceptance criterion"
-      ],
-      "rows": [
-        [
-          "Potentially relevant results appeared but were difficult to recognize.",
-          "Show full destination identity and context.",
-          "Participant identifies the intended destination when a relevant match is present."
-        ],
-        [
-          "Users manually matched destination and stop across views.",
-          "Keep the selected destination visible in the shuttle view.",
-          "The destination remains visible when the participant identifies the serving route."
-        ],
-        [
-          "Users still checked other sources after seeing direction cues.",
-          "Associate arrows with route and stop order.",
-          "Participant can specify the correct route, stop, road side and direction."
-        ]
-      ]
-    }
+    "limitations": "The field evaluation was small and campus-specific. The case does not report a post-launch ridership or usability lift.",
+    "links": []
   },
   {
     "id": "ai-image-memory",
@@ -1026,11 +799,7 @@ window.PROJECTS = [
     "analysisOutcome": "Project materials report a delayed image-type effect at p = .002. The analysis supports a difference in delayed recognition, while avoiding a broader claim that labels or AI images always improve memory.",
     "productOutcome": "A course study reporting recognition accuracy across the four conditions and two test timings.",
     "limitations": "The sample was small and drawn from UCLA students. Stimulus style may partly explain memorability, so broader image categories and preregistered replication would strengthen the conclusion.",
-    "coverAlt": "Original course figure reporting results by image origin and label condition",
-    "coverSize": [
-      900,
-      507
-    ]
+    "coverAlt": "Original course figure reporting results by image origin and label condition"
   },
   {
     "id": "classification-workflow",
@@ -1185,11 +954,7 @@ window.PROJECTS = [
     "analysisOutcome": "The executed notebook reached 0.744 accuracy, 0.694 macro F1, and 0.745 weighted F1. The gap between overall and macro performance showed that chapter imbalance remained an important interpretation limit.",
     "productOutcome": "Delivered a fully executed, reproducible narrative-analytics notebook and visual report that lets readers compare vocabulary, topics, and classification behavior across five fictional worlds.",
     "limitations": "Dialogue volume and speaker distribution differ by chapter. The model identifies linguistic association, not authorial intent or causal narrative influence.",
-    "coverAlt": "Original project figure comparing dialogue distribution across chapters",
-    "coverSize": [
-      499,
-      490
-    ]
+    "coverAlt": "Original project figure comparing dialogue distribution across chapters"
   },
   {
     "id": "image-authenticity",
@@ -1445,7 +1210,7 @@ window.PROJECTS = [
   },
   {
     "id": "deportation-data",
-    "title": "Historical Deportation Data: Visualization & SQL",
+    "title": "Deportation Data Storytelling",
     "subtitle": "Historical data, power, and public interpretation",
     "categories": [
       "analytics",
@@ -1453,7 +1218,7 @@ window.PROJECTS = [
     ],
     "role": "Data Visualization Specialist and Web Manager · Team project",
     "type": "UCLA DH101",
-    "summary": "Developed visualizations and website views for a UCLA team project. A portfolio follow-up ran SQLite against the cleaned historical course file.",
+    "summary": "An evidence-led data story examining U.S. deportation patterns across time and demographic categories.",
     "context": "Historical administrative data carries gaps, bias, and harmful categories that require explanation alongside visualization.",
     "problem": "The site had to make patterns legible without presenting archival labels as neutral truth.",
     "built": [
@@ -1472,26 +1237,18 @@ window.PROJECTS = [
       "CSS",
       "JavaScript",
       "Tableau",
-      "Data Cleaning",
-      "SQLite",
-      "Window Functions"
+      "Data Cleaning"
     ],
     "results": [
-      "Delivered a collaborative data website with interactive visual analysis and explicit data limitations.",
-      "The follow-up query aggregated 3,494 archive rows into 30 annual records. The sum of the person-count field was 49,729, verified against an independent Python aggregation."
+      "Delivered a collaborative data website with interactive visual analysis and explicit data limitations."
     ],
     "learned": "Data storytelling is an editorial responsibility, not only a charting task.",
-    "links": [
-      {
-        "label": "Search Harvard Dataverse for the source dataset",
-        "url": "https://dataverse.harvard.edu/dataverse/harvard?q=Deportations+from+the+United+States"
-      }
-    ],
+    "links": [],
     "analysisQuestion": "What patterns in historical U.S. deportation records can be communicated without treating archival categories as neutral facts?",
     "dataInputs": [
-      "Cleaned course file drawing on Torrie Hester’s Harvard Dataverse dataset",
-      "3,494 archive rows from 1892–1921 in the cleaned file",
-      "Year, category and number of people recorded"
+      "Historical deportation records, 1893–1921",
+      "Year, demographic, and categorical fields",
+      "Archival source documentation"
     ],
     "analysisProcess": [
       {
@@ -1513,19 +1270,8 @@ window.PROJECTS = [
     ],
     "analysisOutcome": "The final team site paired interactive trends with historical context, while my verified role covered data visualization and web management.",
     "productOutcome": "Published a collaborative data-storytelling website with embedded Tableau analysis, historical interpretation, and visible documentation of archival limitations.",
-    "limitations": "The annual totals describe the archived records. Coverage, missing fields and historically contingent categories limit broader interpretation. The portfolio shares query logic and aggregate facts.",
-    "featured": false,
-    "keyContribution": "Prepared chart data and built website views. The follow-up query separates archive rows from the number of people recorded.",
-    "evidence": {
-      "label": "Executed SQL and cross-checked aggregate",
-      "summary": "Read the annual aggregation and year-over-year window query. The results were cross-checked against Python using the cleaned archive data.",
-      "links": [
-        {
-          "label": "SQLite query",
-          "url": "assets/evidence/analytics/deportation-trends.sql"
-        }
-      ]
-    }
+    "limitations": "Archival categories reflect the institutions that produced the records. Missingness and historical labels limit modern interpretation.",
+    "featured": false
   },
   {
     "id": "spotify-api",

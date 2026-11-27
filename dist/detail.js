@@ -3,7 +3,7 @@
 (() => {
   const projects = window.PROJECTS;
   const { categories, contact } = window.PORTFOLIO;
-  const { escape, projectUrl, resourceLink, tags } = window.PortfolioUI;
+  const { escape, projectUrl, external, tags } = window.PortfolioUI;
   const id = new URLSearchParams(location.search).get('id');
   const project = projects.find((item) => item.id === id);
   const root = document.querySelector('#case-content');
@@ -42,9 +42,8 @@
     '</span></figcaption><pre tabindex="0"><code>' + escape(project.example.code) + '</code></pre>' +
     '<p class="example-note">' + escape(project.example.note) + '</p></figure>' : '';
   const cover = project.cover ? '<figure class="evidence-image"><img loading="lazy" decoding="async" src="' +
-    escape(project.cover) + '" alt="' + escape(project.coverAlt || project.title + ' project figure') + '"' +
-    (project.coverSize ? ' width="' + project.coverSize[0] + '" height="' + project.coverSize[1] + '"' : '') +
-    '><figcaption>Figure from the original project materials</figcaption></figure>' : '';
+    escape(project.cover) + '" alt="' + escape(project.coverAlt || project.title + ' project figure') +
+    '"><figcaption>Figure from the original project materials</figcaption></figure>' : '';
 
   const table = project.evidenceTable;
   const evidenceTable = table ? '<div class="table-wrap" tabindex="0" role="region" aria-label="' + escape(table.caption) +
@@ -54,16 +53,9 @@
       '<tr><th scope="row">' + escape(label) + '</th>' + values.map((value) => '<td>' + escape(value) + '</td>').join('') +
       '</tr>').join('') + '</tbody></table></div>' : '';
 
-  const resources = project.links.map(resourceLink).join('') ||
+  const resources = project.links.map(({ url, label }) => external(url, label)).join('') ||
     '<a class="text-link" href="mailto:' + escape(contact.email) + '?subject=' +
-    encodeURIComponent(project.title + ' case study') + '">Ask about this project</a>';
-
-  const evidence = project.evidence;
-  const evidenceSummary = evidence ? '<section class="case-evidence" id="evidence" aria-labelledby="evidence-title">' +
-    '<div><h2 id="evidence-title">Project evidence</h2><p class="card-topic">' + escape(evidence.label) + '</p></div>' +
-    '<div><p>' + escape(evidence.summary) + '</p>' +
-    (evidence.links?.length ? '<div class="profile-links">' + evidence.links.map(resourceLink).join('') + '</div>' : '') +
-    '</div></section>' : '';
+    encodeURIComponent(project.title + ' case study') + '">Ask about this project by email ↗</a>';
 
   const body = [
     section('overview', 'Project overview', para(project.context) + para(project.analysisQuestion)),
@@ -85,16 +77,12 @@
     '<dl class="case-meta"><div><dt>Organization</dt><dd>' + escape(project.type) + '</dd></div>' +
     '<div><dt>My role</dt><dd>' + escape(project.role) + '</dd></div>' +
     (project.period ? '<div><dt>Period</dt><dd>' + escape(project.period) + '</dd></div>' : '') +
-    '</dl></header>' + evidenceSummary + '<div class="case-layout"><nav class="case-toc" aria-label="Case study contents">' +
+    '</dl></header><div class="case-layout"><nav class="case-toc" aria-label="Case study contents">' +
     '<p class="label">On this page</p><ul>' +
     body.map(({ id, title }) => '<li><a href="#' + id + '">' + title + '</a></li>').join('') +
     '</ul></nav><div class="case-sections">' + body.map(({ id, title, body: content }) =>
       '<section class="case-section" id="' + id + '" aria-labelledby="' + id + '-title"><h2 id="' + id +
       '-title">' + title + '</h2>' + content + '</section>').join('') +
     '<a class="next-case" href="' + projectUrl(next.id) + '"><span class="label">Next case study</span><strong>' +
-    escape(next.title) + '</strong></a></div></div></article>';
-  // English: Locate deep links after the dynamic case sections are present.
-  // 中文：详情内容渲染后定位直达链接的锚点。
-  const target = document.getElementById(location.hash.slice(1));
-  if (target) target.scrollIntoView();
+    escape(next.title) + ' ↗</strong></a></div></div></article>';
 })();

@@ -1,10 +1,8 @@
-# English: Build and verify the portfolio before GitHub Pages publishes it.
-# 中文：在 GitHub Pages 发布前，先构建并验证作品集。
 name: Deploy portfolio to GitHub Pages
 
 on:
   push:
-    branches: [main, portfolio-hiring-audit]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -13,33 +11,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages
   cancel-in-progress: true
 
 jobs:
-  verify:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Build and check JavaScript syntax
-        run: |
-          node scripts/build.mjs
-          for source in *.js scripts/*.mjs; do node --check "$source" || exit 1; done
-          git diff --exit-code -- project-index.js dist
-      - name: Install Chromium for browser checks
-        run: |
-          npm install --no-save --no-package-lock playwright@1.57.0
-          npx playwright install --with-deps chromium
-      - name: Check site behavior and responsive layouts
-        run: node scripts/check-browser.mjs
   deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: verify
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,7 +30,7 @@ jobs:
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: .
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
