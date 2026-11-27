@@ -1,6 +1,6 @@
-# Wenjing Tian | Data Science · Applied AI · Data Analytics
+# Wenjing Tian | Applied AI & Data Science
 
-A dependency-free portfolio in HTML, CSS, and JavaScript. It presents four featured projects and a library of technical, research, and product work. The same project records drive every listing and case-study page.
+A dependency-free portfolio in HTML, CSS, and JavaScript. The home page has five highlights, five role views, and a full project library. The build generates a compact card index from the canonical case records.
 
 ## Local preview and build
 
@@ -12,23 +12,24 @@ node scripts/build.mjs
 python3 -m http.server 4173
 ```
 
-Open http://localhost:4173/. Use http://localhost:4173/dist/ to preview the mirrored build. Node.js 20+ is sufficient. The website itself has no runtime package dependencies.
+Open http://localhost:4173/. Use http://localhost:4173/dist/ to preview the mirrored build. Node.js 20+ is sufficient for the static build. The browser check uses Playwright with Chromium. The website itself has no runtime package dependencies.
 
 ## Content maintenance
 
 | File | Edit here |
 | --- | --- |
-| `projects.js` | Case-study facts, role, methods, results, evidence, links, and project order. Set `featured` on the four projects highlighted on the home page. Keep existing `id` values stable to preserve case-study URLs. |
-| `site-data.js` | Project categories, skill groups, contact links, experience and resume options. Set a resume's `pdf` to an approved public file under `assets/` when available. |
+| `projects.js` | Case-study facts, role, methods, results, evidence, links, and project order. Keep existing `id` values stable to preserve case-study URLs. |
+| `site-data.js` | Role selections, project categories, direct skills-to-project links, experience, and résumé contact. |
 | `index.html` | Positioning, overview, section order, education, and the home page's search metadata. |
 | `project.html`, `detail.js` | Shared case-study shell and rendering. Fields such as `example`, `evidenceTable`, and `cover` are optional. |
 | `styles.css`, `project.css` | Shared design tokens, responsive components, and case-study layouts. |
-| `scripts/build.mjs` | Static build manifest. Rebuild `dist/` after editing source instead of editing the mirror. |
+| `assets/evidence/` | Public coursework evidence and portfolio SQL analysis. |
+| `scripts/build.mjs` | Generates `project-index.js` and the `dist/` mirror. Rebuild after editing source. |
 
-Use a public resource link only after confirming that an unauthenticated visitor can access it. Label recreated examples or conceptual diagrams in their captions.
+Use `?role=data-science#projects`, `?role=applied-ai#projects`, `?role=analytics-bi#projects`, `?role=data-governance#projects`, or `?role=ai-product#projects` to share a role view. Label public, private, and illustrative evidence in each case study.
 
 ## GitHub Pages
 
-The existing GitHub Actions workflow publishes the repository root after a push to `main`. The source is set to **GitHub Actions** under **Settings → Pages**. Check **Actions → Deploy portfolio to GitHub Pages** for the deployment result. Relative links keep the site and assets working under `/wenjing-ai-systems-portfolio/`; case studies retain the `project.html?id=…` route.
+GitHub Actions rebuilds the portfolio, checks JavaScript syntax, and runs Chromium checks before publishing `dist/` from `main`. The source is set to **GitHub Actions** under **Settings → Pages**. Check **Actions → Deploy portfolio to GitHub Pages** for the deployment result. Relative links keep the site and assets working under `/wenjing-ai-systems-portfolio/`; case studies retain the `project.html?id=…` route.
 
 The repository also tracks a `dist/` mirror for its existing static hosting configuration. Regenerate it before committing source changes.

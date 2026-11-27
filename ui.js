@@ -6,7 +6,10 @@ window.PortfolioUI = (() => {
   const projectUrl = (id) => 'project.html?id=' + encodeURIComponent(id);
   const external = (url, label) =>
     '<a class="text-link" href="' + escape(url) + '" target="_blank" rel="noopener noreferrer">' +
-    escape(label) + ' <span aria-hidden="true">↗</span></a>';
+    escape(label) + '</a>';
+  const resourceLink = ({ url, label }) => url.startsWith('assets/')
+    ? '<a class="text-link" href="' + escape(url) + '">' + escape(label) + '</a>'
+    : external(url, label);
   const tags = (items) => '<ul class="tags" aria-label="Tools and methods">' +
     items.map((item) => '<li>' + escape(item) + '</li>').join('') + '</ul>';
 
@@ -63,5 +66,5 @@ window.PortfolioUI = (() => {
     element.innerHTML = external(contact.github, 'GitHub') + external(contact.linkedin, 'LinkedIn') + email;
   });
 
-  return { escape, projectUrl, external, tags };
+  return { escape, projectUrl, resourceLink, tags };
 })();
