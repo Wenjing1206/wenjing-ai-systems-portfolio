@@ -72,10 +72,10 @@ try {
   assert.equal(await page.locator('#role-nav [aria-current=true]').getAttribute('data-role'), 'ai-product');
   await page.goto(site + '?role=analytics-bi');
   assert.equal(await page.locator('#role-nav [aria-current=true]').getAttribute('data-role'), 'analytics-bi');
-  const filters = await page.locator('[data-filter]').evaluateAll((buttons) => buttons.map((button) => button.dataset.filter));
+  const filters = await page.locator('#project-filters button[data-filter]').evaluateAll((buttons) => buttons.map((button) => button.dataset.filter));
   assert.equal(filters.length, 9);
   for (const filter of filters) {
-    await page.locator('[data-filter="' + filter + '"]').click();
+    await page.locator('#project-filters button[data-filter="' + filter + '"]').click();
     assert.ok(await page.locator('.library-card').count() > 0);
     assert.equal(new URL(page.url()).searchParams.get('role'), 'analytics-bi');
   }
